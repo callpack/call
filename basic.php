@@ -1,6 +1,5 @@
 <?php
 require 'vendor/autoload.php';
-require 'config.php';
 $PWD=getcwd().'/';//get current working director
 $fn=@$argv[1];
 switch($fn){
@@ -75,15 +74,51 @@ function install($repo=false){
         file_put_contents($filename,$content);
     }
     global $PWD;
-    if(unzip($filename,$PWD)){
+    $destination=$PWD.'basic';
+    if(!file_exists($destination)){
+        mkdir($destination);
+    }
+    $destination=$destination.'/getbasic';
+    //cria a pasta do usuário
+    if(!file_exists($destination)){
+        mkdir($destination);
+    }
+    $destinationTempName=$destination."/$repo-master";
+    $destinationNewName=$destination."/$repo";
+    //verifica se repositório já tá instalando
+    if(file_exists($destinationNewName)){
+        rmDirNotEmpty($destinationNewName);
+    }
+    //verifica se sobrou uma pasta temporária
+    if(file_exists($destinationTempName)){
+        rmDirNotEmpty($destinationTempName);
+    }
+    if(unzip($filename,$destination)){
+        if(file_exists($destinationTempName)){
+            if(!file_exists($destinationNewName)){
+                rename($destinationTempName,$destinationNewName);
+            }
+        }
         if($skipCache){
             echo $repo.' atualizado com sucesso'.PHP_EOL;
         }else{
             echo $repo.' instalado com sucesso'.PHP_EOL;
         }
     }else{
-        echo 'ocorreu um erro ao extrair os arquivos'.PHP_EOL;
+        die('ocorreu um erro ao extrair os arquivos'.PHP_EOL);
     }
+}
+function rmDirNotEmpty($dir) {
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (filetype($dir."/".$object) == "dir") rmDirNotEmpty($dir."/".$object); else unlink($dir."/".$object);
+       }
+     }
+     reset($objects);
+     rmdir($dir);
+   }
 }
 function uninstall(){
     echo 'removendo...'.PHP_EOL;
