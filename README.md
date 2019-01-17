@@ -32,8 +32,8 @@ cd ~/.config/basic
     apaga a pasta dele em "{$PWD}basic/$repo"
     apaga o registro dele no $PWD/basic/basic.json
 
-#unzip
+# unzip
     ok descompacta o arquivo
 
-#update
+# update
     ok install com $skipCache ativado
