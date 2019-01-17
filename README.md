@@ -10,7 +10,7 @@ cd ~/.config/basic
 6. incorporar os pacotes facilmente através da função inc()
 
 # download
-[X] adicionar argumento para receber o user-agent
+\[x] adicionar argumento para receber o user-agent
 
 # help
     ok instruções de uso
