@@ -11,6 +11,6 @@ cd ~/.config/basic
 
 # TODO
 ## uninstall
-    verifica se ele existe no "{$PWD}basic/basic.json
-    apaga a pasta dele em "{$PWD}basic/$repo"
-    apaga o registro dele no $PWD/basic/basic.json
+    verifica se o pacote existe no "{$PWD}basic/basic.json
+    apaga a pasta do pacote em "{$PWD}basic/$repo"
+    apaga o registro do pacote no $PWD/basic/basic.json
