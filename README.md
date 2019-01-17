@@ -2,6 +2,7 @@
     git clone https://github.com/getbasic/basic.git ~/.config
 
 Adicione um alias para o script basic.php:
+
     alias basic="php ~/.config/basic/basic.php"
 
 # funcionalidades (features)
