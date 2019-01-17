@@ -99,6 +99,16 @@ function install($repo=false){
                 rename($destinationTempName,$destinationNewName);
             }
         }
+        //atualiza o basic/basic.json
+        $filename=$PWD.'basic/basic.json';
+        if(file_exists($filename)){
+            $jsonString=file_get_contents($filename);
+            $jsonArray=json_decode($jsonString,true);
+        }
+        $jsonArray[]=$repo;
+        $jsonArray=array_values(array_unique($jsonArray));
+        $data=json_encode($jsonArray,JSON_PRETTY_PRINT);
+        file_put_contents($filename,$data);
         if($skipCache){
             echo $repo.' atualizado com sucesso'.PHP_EOL;
         }else{
@@ -109,16 +119,16 @@ function install($repo=false){
     }
 }
 function rmDirNotEmpty($dir) {
-   if (is_dir($dir)) {
-     $objects = scandir($dir);
-     foreach ($objects as $object) {
-       if ($object != "." && $object != "..") {
-         if (filetype($dir."/".$object) == "dir") rmDirNotEmpty($dir."/".$object); else unlink($dir."/".$object);
-       }
-     }
-     reset($objects);
-     rmdir($dir);
-   }
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir."/".$object) == "dir") rmDirNotEmpty($dir."/".$object); else unlink($dir."/".$object);
+            }
+        }
+        reset($objects);
+        rmdir($dir);
+    }
 }
 function uninstall(){
     echo 'removendo...'.PHP_EOL;
