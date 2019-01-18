@@ -90,6 +90,7 @@ function install($repo=false){
     $destination=$PWD.'basic';
     if(!file_exists($destination)){
         mkdir($destination);
+        install('inc');
     }
     $destination=$destination.'/getbasic';
     //cria a pasta do usuário
