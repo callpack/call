@@ -7,7 +7,7 @@ switch($fn){
     case 'install':
     install();
     break;
-    case 'uninstall':
+    case 'remove' OR 'uninstall':
     uninstall();
     break;
     case 'update':
@@ -40,6 +40,14 @@ function download($url,$method='GET',$ua=false) {
         }
     } catch (RuntimeException $e) {
         return false;
+    }
+}
+function dirIsEmpty($dir)
+{
+    if ($files = glob($dir . "/*")) {
+        return false;
+    } else {
+        return true;
     }
 }
 function help(){
@@ -123,6 +131,9 @@ function install($repo=false){
         die('ocorreu um erro ao extrair os arquivos'.PHP_EOL);
     }
 }
+function remove(){
+    return uninstall();
+}
 function rmDirNotEmpty($dir) {
     if (is_dir($dir)) {
         $objects = scandir($dir);
@@ -138,10 +149,33 @@ function rmDirNotEmpty($dir) {
 function uninstall(){
     echo 'removendo...'.PHP_EOL;
     global $argv;
+    global $PWD;
     $repo=@$argv[2];
     // verifica se o pacote existe no "{$PWD}basic/basic.json
-    // apaga a pasta do pacote em "{$PWD}basic/$repo"
+    $filename="{$PWD}basic/basic.json";
+    $array=[];
+    if(file_exists($filename)){
+        $content=file_get_contents($filename);
+        $array=json_decode($content);
+    }
     // apaga o registro do pacote no $PWD/basic/basic.json
+    foreach ($array as $key => $value) {
+        if($value==$repo){
+            unset($array[$key]);
+        }
+    }
+    $data=json_encode($array,JSON_PRETTY_PRINT);
+    file_put_contents($filename,$data);
+    // apaga a pasta do pacote em "{$PWD}basic/$repo"
+    $filename="{$PWD}basic/getbasic/{$repo}";
+    if(file_exists($filename)){
+        rmDirNotEmpty($filename);
+    }
+    $filename="{$PWD}basic/getbasic/";
+    if(dirIsEmpty($filename)){
+        rmDirNotEmpty($filename);
+    }
+    echo $repo." removido com sucesso".PHP_EOL;
 }
 function unzip($filename,$folderDestination){
     $zip = new ZipArchive;
