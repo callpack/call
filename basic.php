@@ -7,7 +7,10 @@ switch($fn){
     case 'install':
     install();
     break;
-    case 'remove' OR 'uninstall':
+    case 'remove':
+    uninstall();
+    break;
+    case 'uninstall':
     uninstall();
     break;
     case 'update':
