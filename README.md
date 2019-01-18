@@ -18,6 +18,7 @@
 Usage: basic command [optional package name]
 Commands:
 	install - Install package
+	remove - Remove package    
 	uninstall - Remove package
 	update - Update package
 ```
