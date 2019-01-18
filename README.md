@@ -15,10 +15,10 @@
 
 # Como usar
 ```
-Usage: basic command [optional package name]
-Commands:
+basic commando [nome do pacote]
+```
+## Commandos:
 	install - Install package
 	remove - Remove package    
 	uninstall - Remove package
 	update - Update package
-```
