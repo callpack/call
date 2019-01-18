@@ -1,5 +1,5 @@
 # Instalação
-    git clone https://github.com/getbasic/basic.git ~/.config &&
+    git clone https://github.com/getbasic/basic.git ~/.config/ &&
     sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
     chmod +x /usr/bin/basic
 
