@@ -18,7 +18,7 @@
 basic commando [nome do pacote]
 ```
 ## Commandos:
-	install - Install package
-	remove - Remove package    
-	uninstall - Remove package
-	update - Update package
+- install - Instala um pacote
+- remove - Remove um pacote
+- uninstall - Remove um pacote
+- update - Atualiza um pacote
