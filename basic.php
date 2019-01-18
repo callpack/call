@@ -57,6 +57,10 @@ function install($repo=false){
         $repo=@$argv[2];
         $skipCache=false;
     }
+    $filename=__DIR__."/cache";
+    if(!file_exists($filename)){
+        mkdir($filename);
+    }
     $filename=__DIR__."/cache/$repo.zip";
     if(file_exists($filename) && $skipCache==true){
         unlink($filename);
