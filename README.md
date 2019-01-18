@@ -14,8 +14,10 @@
     chmod +x /usr/bin/basic
 
 # Como usar
+```
 Usage: basic command [optional package name]
 Commands:
 	install - Install package
 	uninstall - Remove package
 	update - Update package
+```
