@@ -15,9 +15,9 @@
 
 # Como usar
 ```
-basic commando [nome do pacote]
+basic [nome do comando] [nome do pacote]
 ```
-## Commandos:
+## Nomes dos comandos
 - install - Instala um pacote
 - remove - Remove um pacote
 - uninstall - Remove um pacote
