@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 require 'vendor/autoload.php';
 $PWD=getcwd().'/';//get current working director
@@ -134,6 +135,9 @@ function uninstall(){
     echo 'removendo...'.PHP_EOL;
     global $argv;
     $repo=@$argv[2];
+    // verifica se o pacote existe no "{$PWD}basic/basic.json
+    // apaga a pasta do pacote em "{$PWD}basic/$repo"
+    // apaga o registro do pacote no $PWD/basic/basic.json
 }
 function unzip($filename,$folderDestination){
     $zip = new ZipArchive;
