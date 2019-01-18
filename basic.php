@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-require 'vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 $PWD=getcwd().'/';//get current working director
 $fn=@$argv[1];
 switch($fn){
