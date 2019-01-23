@@ -1,5 +1,5 @@
 <?php
-$str=getcwd();
+$str=__DIR__;
 $arr=explode('/',$str);
 end($arr);
 $key=key($arr);
