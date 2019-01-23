@@ -68,6 +68,7 @@ function install($repo=false){
         $repo=@$argv[2];
         $skipCache=false;
     }
+    //criar pasta do cache
     $filename=__DIR__."/cache";
     if(!file_exists($filename)){
         mkdir($filename);
@@ -94,7 +95,15 @@ function install($repo=false){
     if(!file_exists($destination)){
         mkdir($destination);
         install('inc');
+        $filename="{$PWD}basic/basic.php";
+        if(!file_exists($filename)){
+            $filename=__DIR__."/basic/basic.php";
+            $content=file_get_contents($filename);
+            $filename="{$PWD}basic/basic.php";
+            file_put_contents($filename,$content);
+        }
     }
+    $filename=__DIR__."/cache/$repo.zip";
     $destination=$destination.'/getbasic';
     //cria a pasta do usuário
     if(!file_exists($destination)){
