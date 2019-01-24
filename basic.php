@@ -3,6 +3,7 @@
 require __DIR__.'/vendor/autoload.php';
 $PWD=getcwd().'/';//get current working director
 $fn=@$argv[1];
+$update=false;
 switch($fn){
     case 'install':
     install();
@@ -61,6 +62,7 @@ function help(){
     echo chr(9).'update - Update package'.PHP_EOL;
 }
 function install($repo=false){
+    global $update;
     if(is_string($repo)){
         $skipCache=true;
     }else{
@@ -75,12 +77,14 @@ function install($repo=false){
     }
     $filename=__DIR__."/cache/$repo.zip";
     if(file_exists($filename) && $skipCache==true){
-        unlink($filename);
+        if($update=='update'){
+            unlink($filename);
+        }
     }
     if(file_exists($filename) && $skipCache==false){
         echo 'instalando partir do cache...'.PHP_EOL;
         $content=file_get_contents($filename);
-    }else{
+    }elseif(!file_exists($filename) OR $update==true){
         echo 'baixando do github...'.PHP_EOL;
         $url="https://github.com/getbasic/";
         $url=$url."$repo/archive/master.zip";
@@ -89,6 +93,9 @@ function install($repo=false){
             die('pacote não encontrado'.PHP_EOL);
         }
         file_put_contents($filename,$content);
+    }else{
+        echo 'instalando partir do cache...'.PHP_EOL;
+        $content=file_get_contents($filename);
     }
     global $PWD;
     $destination=$PWD.'basic';
@@ -202,6 +209,8 @@ function unzip($filename,$folderDestination){
     }
 }
 function update(){
+    global $update;
+    $update='update';
     echo 'atualizando...'.PHP_EOL;
     global $argv;
     $repo=@$argv[2];
