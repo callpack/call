@@ -7,5 +7,3 @@ unset($arr[$key]);
 $str=implode('/',$arr).'/';
 define("ROOT",$str);
 require 'getbasic/inc/inc.php';
-?>
-
