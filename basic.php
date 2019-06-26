@@ -21,31 +21,21 @@ switch($fn){
     help();
     break;
 }
-function download($url,$method='GET',$ua=false) {
-    //http://docs.guzzlephp.org/en/stable/
-    $client=new GuzzleHttp\Client ();
-    if(!$ua){
-        $ua ="USER_AGENT','Mozilla/5.0 ";
-        $ua.='(X11; Ubuntu; Linux x86_64; rv:64.0) ';
-        $ua.='Gecko/20100101 Firefox/64.0';
-    }
-    $headers=[
-        'headers'=>[
-            'User-Agent'=>$ua
-        ],
-        'http_errors' => false
-    ];
-    try {
-        $res=$client->request($method,$url,$headers);
-        $body=false;
-        if($res->getStatusCode()==200){
-            return $res->getBody();
-        }else{
-            return false;
-        }
-    } catch (RuntimeException $e) {
-        return false;
-    }
+function download($url, $method = 'GET') {
+	$client = new \GuzzleHttp\Client ();//http://docs.guzzlephp.org/en/stable/
+	$headers = [
+			'headers' => [
+					'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'//26dez2018
+			],
+		    'http_errors' => false
+		    //http://docs.guzzlephp.org/en/stable/request-options.html#http-errors
+	];
+	$res = $client->request ( $method, $url, $headers );
+	if ($res->getStatusCode () == 200) {
+		return $res->getBody ();
+	} else {
+		return false;
+	}
 }
 function dirIsEmpty($dir)
 {
