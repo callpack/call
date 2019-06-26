@@ -32,7 +32,8 @@ function download($url,$method='GET',$ua=false) {
     $headers=[
         'headers'=>[
             'User-Agent'=>$ua
-        ]
+        ],
+        'http_errors' => false
     ];
     try {
         $res=$client->request($method,$url,$headers);
