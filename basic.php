@@ -158,7 +158,7 @@ function uninstall($repo=false){
         $array=[];
         if(file_exists($filename)){
             $content=file_get_contents($filename);
-            $array=json_decode($content);
+            $array=json_decode($content,true);
         }
         // apaga o registro do pacote no $PWD/basic/basic.json
         foreach ($array as $key => $value) {
