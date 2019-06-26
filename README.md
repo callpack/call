@@ -7,14 +7,19 @@
 6. incorporar os pacotes facilmente através da função inc()
 
 # Instalação
-    git clone https://github.com/getbasic/basic.git ~/.config/basic &&
-    cd ~/.config/basic &&
-    composer install &&
-    sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
-    chmod +x /usr/bin/basic
+```bash
+rm -rf ~/.config/basic &&
+cd ~/.config &&
+git clone https://github.com/getbasic/basic.git &&
+cd ~/.config/basic &&
+composer install &&
+sudo rm -rf /usr/bin/basic &&
+sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
+chmod +x /usr/bin/basic
+```
 
 # Como usar
-```
+```bash
 basic [comando] [nome do pacote]
 ```
 ## Comandos
