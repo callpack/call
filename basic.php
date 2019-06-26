@@ -61,14 +61,21 @@ function help(){
     echo chr(9).'uninstall - Remove package'.PHP_EOL;
     echo chr(9).'update - Update package'.PHP_EOL;
 }
-function install($repo=false){
+function install($repo=false,$skipCache=true){
     global $update;
     if(is_string($repo)){
         $skipCache=true;
     }else{
         global $argv;
-        $repo=@$argv[2];
-        $skipCache=false;
+        unset($argv[0]);
+        unset($argv[1]);
+        $repos=$argv;
+        if(is_array($repos) && count($repos)>=1){
+            foreach ($repos as $repo) {
+                install($repo,false);
+            }
+        }
+        break;
     }
     //criar pasta do cache
     $filename=__DIR__."/cache";
@@ -166,36 +173,47 @@ function rmDirNotEmpty($dir) {
         rmdir($dir);
     }
 }
-function uninstall(){
+function uninstall($repo=false){
     echo 'removendo...'.PHP_EOL;
     global $argv;
     global $PWD;
-    $repo=@$argv[2];
-    // verifica se o pacote existe no "{$PWD}basic/basic.json
-    $filename="{$PWD}basic/basic.json";
-    $array=[];
-    if(file_exists($filename)){
-        $content=file_get_contents($filename);
-        $array=json_decode($content);
-    }
-    // apaga o registro do pacote no $PWD/basic/basic.json
-    foreach ($array as $key => $value) {
-        if($value==$repo){
-            unset($array[$key]);
+    if($repo){
+        // verifica se o pacote existe no "{$PWD}basic/basic.json
+        $filename="{$PWD}basic/basic.json";
+        $array=[];
+        if(file_exists($filename)){
+            $content=file_get_contents($filename);
+            $array=json_decode($content);
         }
+        // apaga o registro do pacote no $PWD/basic/basic.json
+        foreach ($array as $key => $value) {
+            if($value==$repo){
+                unset($array[$key]);
+            }
+        }
+        $data=json_encode($array,JSON_PRETTY_PRINT);
+        file_put_contents($filename,$data);
+        // apaga a pasta do pacote em "{$PWD}basic/$repo"
+        $filename="{$PWD}basic/getbasic/{$repo}";
+        if(file_exists($filename)){
+            rmDirNotEmpty($filename);
+        }
+        $filename="{$PWD}basic/getbasic/";
+        if(dirIsEmpty($filename)){
+            rmDirNotEmpty($filename);
+        }
+        echo $repo." removido com sucesso".PHP_EOL;
+    }else{
+        unset($argv[0]);
+        unset($argv[1]);
+        $repos=$argv;
+        if(is_array($repos) && count($repos)>=1){
+            foreach ($repos as $repo) {
+                uninstall($repo);
+            }
+        }
+        break;
     }
-    $data=json_encode($array,JSON_PRETTY_PRINT);
-    file_put_contents($filename,$data);
-    // apaga a pasta do pacote em "{$PWD}basic/$repo"
-    $filename="{$PWD}basic/getbasic/{$repo}";
-    if(file_exists($filename)){
-        rmDirNotEmpty($filename);
-    }
-    $filename="{$PWD}basic/getbasic/";
-    if(dirIsEmpty($filename)){
-        rmDirNotEmpty($filename);
-    }
-    echo $repo." removido com sucesso".PHP_EOL;
 }
 function unzip($filename,$folderDestination){
     $zip = new ZipArchive;
@@ -208,12 +226,23 @@ function unzip($filename,$folderDestination){
         return false;
     }
 }
-function update(){
+function update($repo=false){
     global $update;
-    $update='update';
-    echo 'atualizando...'.PHP_EOL;
     global $argv;
-    $repo=@$argv[2];
-    install($repo);
+    if($repo){
+        $update='update';
+        echo 'atualizando...'.PHP_EOL;
+        install($repo,false);
+    }else{
+        unset($argv[0]);
+        unset($argv[1]);
+        $repos=$argv;
+        if(is_array($repos) && count($repos)>=1){
+            foreach ($repos as $repo) {
+                update($repo);
+            }
+        }
+        break;
+    }
 }
 ?>
