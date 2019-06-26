@@ -8,6 +8,12 @@
             "url": "https://github.com/guzzle/guzzle.git",
             "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
         },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+            "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+            "shasum": ""
+        },
         "require": {
             "guzzlehttp/promises": "^1.0",
             "guzzlehttp/psr7": "^1.4",
@@ -28,7 +34,7 @@
                 "dev-master": "6.3-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "files": [
                 "src/functions_include.php"
@@ -37,11 +43,7 @@
                 "GuzzleHttp\\": "src/"
             }
         },
-        "autoload-dev": {
-            "psr-4": {
-                "GuzzleHttp\\Tests\\": "tests/"
-            }
-        },
+        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
@@ -55,11 +57,11 @@
         "description": "Guzzle is a PHP HTTP client library",
         "homepage": "http://guzzlephp.org/",
         "keywords": [
-            "HTTP client",
             "client",
             "curl",
             "framework",
             "http",
+            "http client",
             "rest",
             "web service"
         ]

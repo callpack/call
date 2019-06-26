@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/download/download.php';
 $PWD=getcwd().'/';//get current working director
 $fn=@$argv[1];
 $update=false;
@@ -20,22 +20,6 @@ switch($fn){
     default:
     help();
     break;
-}
-function download($url, $method = 'GET') {
-	$client = new \GuzzleHttp\Client ();//http://docs.guzzlephp.org/en/stable/
-	$headers = [
-			'headers' => [
-					'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'//26dez2018
-			],
-		    'http_errors' => false
-		    //http://docs.guzzlephp.org/en/stable/request-options.html#http-errors
-	];
-	$res = $client->request ( $method, $url, $headers );
-	if ($res->getStatusCode () == 200) {
-		return $res->getBody ();
-	} else {
-		return false;
-	}
 }
 function dirIsEmpty($dir)
 {

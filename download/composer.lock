@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee7164e92ae07d6bf3351f2e7b9dfb15",
+    "content-hash": "55f6c2e4bd979a78cd8c3aa41dfe6691",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -13,6 +13,12 @@
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
                 "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "shasum": ""
             },
             "require": {
                 "guzzlehttp/promises": "^1.0",
@@ -41,11 +47,7 @@
                     "GuzzleHttp\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "GuzzleHttp\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -59,11 +61,11 @@
             "description": "Guzzle is a PHP HTTP client library",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
-                "HTTP client",
                 "client",
                 "curl",
                 "framework",
                 "http",
+                "http client",
                 "rest",
                 "web service"
             ],
