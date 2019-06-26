@@ -75,7 +75,7 @@ function install($repo=false,$skipCache=true){
                 install($repo,false);
             }
         }
-        break;
+        exit();
     }
     //criar pasta do cache
     $filename=__DIR__."/cache";
@@ -212,7 +212,7 @@ function uninstall($repo=false){
                 uninstall($repo);
             }
         }
-        break;
+        exit();
     }
 }
 function unzip($filename,$folderDestination){
@@ -242,7 +242,7 @@ function update($repo=false){
                 update($repo);
             }
         }
-        break;
+        exit();
     }
 }
 ?>
