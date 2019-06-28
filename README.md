@@ -1,5 +1,5 @@
 # Funcionalidades (features)
-1. baixar pacotes da organização [BASIC](https://github.com/getbasic)
+1. baixar pacotes da organização [Basic](https://github.com/getbasic)
 2. fazer o cache dos pacotes
 3. instalar os pacotes
 4. atualizar os pacotes
