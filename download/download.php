@@ -1,20 +1,23 @@
 <?php
-require_once 'vendor/autoload.php';
+//Criado por Anderson Ismael
+//30 de Julho de 2019
 
 function download($url, $method = 'GET') {
-	$client = new \GuzzleHttp\Client ();//http://docs.guzzlephp.org/en/stable/
-	$headers = [ 
-			'headers' => [ 
-					'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'//26dez2018 
-			],
-		    'http_errors' => false
-		    //http://docs.guzzlephp.org/en/stable/request-options.html#http-errors
-	];
-	$res = $client->request ( $method, $url, $headers );
-	if ($res->getStatusCode () == 200) {
-		return $res->getBody ();
-	} else {
-		return false;
-	}
+    $useragent='Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0';
+    $ch = curl_init();
+    //you might need to set some cookie details up (depending on the site)
+    //curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+    curl_setopt($ch, CURLOPT_URL,$url); //set the url we want to use
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 1000);    
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+    curl_setopt($ch, CURLOPT_USERAGENT, $useragent); //set our user agent
+    $result= curl_exec ($ch); //execute and get the results
+    if($result){
+        return $result;
+    }else{
+        return false;
+    }
+    curl_close ($ch);
 }
 ?>
