@@ -98,8 +98,8 @@ function install($repo=false,$skipCache=true){
     if(!file_exists($destination)){
         mkdir($destination);
     }
-    $destinationTempName=$destination."/$repo-master";
-    $destinationNewName=$destination."/$repo";
+    $destinationTempName=mb_strtolower($destination."/$repo-master");
+    $destinationNewName=mb_strtolower($destination."/$repo");
     //verifica se repositório já tá instalando
     if(file_exists($destinationNewName)){
         rmDirNotEmpty($destinationNewName);
