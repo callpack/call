@@ -3,9 +3,15 @@
 //Criado por Anderson Ismael
 //06 de agosto de 2019
 require 'basic/basic.php';
-$incs=['download','env','error'];
-inc($incs);
-//system('clear');
+inc([
+    'download',
+    'env',
+    'error',
+    'iscli'
+]);
+if(iscli()){
+    mensagemDeErroFatal('O Basic só funciona no modo CLI');
+}
 error(1);
 $PWD=getcwd().'/';//get current working director
 $fn=@$_SERVER['argv'][1];
@@ -45,7 +51,7 @@ function install(){
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
     //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
     if(!oPacoteEstáInstalado('inc')){
-        $pacotesArr[]='inc';    
+        $pacotesArr[]='inc';
     }
     //instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
@@ -70,6 +76,10 @@ function instalarPacote($pacotesArr){
     //     diz que o pacote foi instalado com sucesso
     // else
     //     diz que o pacote não existe no github
+}
+function mensagemDeErroFatal($msg){
+    print 'Erro fatal:'.PHP_EOL;
+    die(chr(9).$msg.PHP_EOL);
 }
 function oPacoteEstáInstalado($pacoteStr){
 

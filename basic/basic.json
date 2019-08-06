@@ -3,5 +3,6 @@
     "call",
     "error",
     "inc",
-    "env"
+    "env",
+    "iscli"
 ]
