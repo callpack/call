@@ -8,12 +8,12 @@ inc($incs);
 //system('clear');
 error(1);
 $PWD=getcwd().'/';//get current working director
-$fn=@$argv[1];
+$fn=@$_SERVER['argv'][1];
 $update=false;
 switch($fn){
-    // case 'install':
-    // install();
-    // break;
+    case 'install':
+    install();
+    break;
     // case 'remove':
     // uninstall();
     // break;
@@ -35,7 +35,24 @@ function help(){
     echo chr(9).'uninstall - Remove package'.PHP_EOL;
     echo chr(9).'update - Update package'.PHP_EOL;
 }
-function install($name){
+function criarOPacotesArr($arr){
+    unset($arr[0]);
+    unset($arr[1]);
+    return array_values($arr);
+}
+function install(){
+    //extrair o nome dos pacotes criando o array $pacotesArr
+    $pacotesArr=criarOPacotesArr($_SERVER['argv']);
+    //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
+    if(!oPacoteEstáInstalado('inc')){
+        $pacotesArr[]='inc';    
+    }
+    //instala cada pacote do $pacotesArr
+    foreach ($pacotesArr as $pacoteStr) {
+        instalarPacote($pacoteStr);
+    }
+}
+function instalarPacote($pacotesArr){
     // possíveis retornos do install
     // //dependencias
     // pasta PWD/basic/getbasic
@@ -54,7 +71,10 @@ function install($name){
     // else
     //     diz que o pacote não existe no github
 }
-function uninstall($name){
+function oPacoteEstáInstalado($pacoteStr){
+
+}
+function uninstall($pacotesArr){
     // possíveis retornos do uninstall
     //     if o pacote existe no PWD
     //         apaga ele
@@ -62,7 +82,7 @@ function uninstall($name){
     //     else
     //         diz que o pacote não está instalado
 }
-function update($name){
+function update($pacotesArr){
     // possíveis retornos do update
     //     if o pacote existe no PWD
     //         apaga ele
