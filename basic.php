@@ -36,8 +36,8 @@ switch($fn){
     break;
 }
 function help(){
-    print "Modo de usar";
-    print $_ENV['NOME_DO_GERENCIADOR']." comando ";
+    print "Modo de usar:".PHP_EOL;
+    print chr(9).$_ENV['NOME_DO_GERENCIADOR']." comando ";
     print "[nome do pacote opcional]".PHP_EOL;
     echo "Comandos:".PHP_EOL;
     echo chr(9).'help- Mostra essa tela de ajuda'.PHP_EOL;
@@ -73,7 +73,7 @@ function install(){
         instalarPacote($pacoteStr);
     }
 }
-function instalarNoPWD(){
+function instalarDependenciasNoPWD(){
     // //dependencias:
     //     pasta PWD/basic/basicpack
     //     inc
@@ -82,16 +82,15 @@ function instalarNoPWD(){
 function instalarPacote($pacotesArr){
     // possíveis retornos do install
     // //instalação
-    instalarNoPWD();
-    // if o pacote existe no PWD
+    instalarDependenciasNoPWD();
+    // ok if o pacote existe no PWD
     if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
         //     diz que o pacote já está instalado
         oPacoteFoiInstaladoComSucesso($pacoteStr);
     }elseif(oPacoteExisteNoCache($pacoteStr)){
         // elseif o pacote existe no cache
         //     instala ele no PWD
-        //     diz que o pacote foi instalado com sucesso
-        oPacoteFoiInstaladoComSucesso($pacoteStr);
+        instalarOPacoteNoPWDAPartirDoCache($pacoteStr)
     }elseif(oPacoteExisteNoGithub($pacoteStr)){
         // elseif o pacote existe no Github
         //     baixar ele para o cache
@@ -102,6 +101,17 @@ function instalarPacote($pacotesArr){
         // else (se o pacote não existe no pwd, no cache ou no github)
         //     diz que o pacote não existe no github
     }
+}
+function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
+    //instala o pacote no pwd
+    //     diz que o pacote foi instalado com sucesso
+    oPacoteFoiInstaladoComSucesso($pacoteStr);
+}
+function instalarOPacoteAPartirDoGithub($pacoteStr){
+    //baixa o pacote do github
+    //salva o pacote no cache
+    //instala o pacote no pwd a partir do cache
+    instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
 }
 function oPacoteExisteNoCache($pacoteStr){
     //verifica se o pacote existe no cache
