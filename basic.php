@@ -21,18 +21,22 @@ switch($fn){
     case 'install':
     instalar();
     break;
-    // case 'remove':
-    // uninstall();
-    // break;
-    // case 'remove':
-    // case 'uninstall':
-    // desinstalar();
-    // break;
-    // case 'update':
-    // atualizar();
-    // break;
+
+    case 'remove':
+    uninstall();
+    break;
+
+    case 'remove':
+    case 'uninstall':
+    desinstalar();
+    break;
+
+    case 'update':
+    atualizar();
+    break;
+
     default:
-    help();
+    telaDeAjuda();
     break;
 }
 //FUNÇÕES
@@ -67,17 +71,6 @@ function desinstalar($pacotesArr){
     //         diz que o pacote foi apagado
     //     else
     //         diz que o pacote não está instalado
-}
-function help(){
-    print "Modo de usar:".PHP_EOL;
-    print chr(9).$_ENV['NOME_DO_GERENCIADOR']." comando ";
-    print "[nome do pacote opcional]".PHP_EOL;
-    echo "Comandos:".PHP_EOL;
-    echo chr(9).'help- Mostra essa tela de ajuda'.PHP_EOL;
-    echo chr(9).'install - Instala o(s) pacote(s)'.PHP_EOL;
-    echo chr(9).'remove - Remove o(s) pacote(s)'.PHP_EOL;
-    echo chr(9).'uninstall - Remove o(s) pacote(s)'.PHP_EOL;
-    echo chr(9).'update - Atualiza o(s) pacote(s)'.PHP_EOL;
 }
 function instalar(){
     //ok extrair o nome dos pacotes criando o array $pacotesArr
@@ -153,5 +146,16 @@ function oPacoteEstáInstaladoNoPWD($pacoteStr){
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
     mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
+}
+function telaDeAjuda(){
+    print "Modo de usar:".PHP_EOL;
+    print chr(9).$_ENV['NOME_DO_GERENCIADOR']." comando ";
+    print "[nome do pacote opcional]".PHP_EOL;
+    echo "Comandos:".PHP_EOL;
+    echo chr(9).'help- Mostra essa tela de ajuda'.PHP_EOL;
+    echo chr(9).'install - Instala o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'remove - Remove o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'uninstall - Remove o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'update - Atualiza o(s) pacote(s)'.PHP_EOL;
 }
 ?>
