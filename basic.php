@@ -42,21 +42,21 @@ switch($fn){
 //FUNÇÕES
 function atualizar($pacotesArr){
     // possíveis retornos do update
-    //     if o pacote existe no PWD
+    //     TODO if o pacote existe no PWD
     //         apaga ele
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe no cache
+    //     TODO elseif o pacote existe no cache
     //         apaga ele
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe na internet
+    //     TODO elseif o pacote existe na internet
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     else
+    //     TODO else
     //         diz que o pacote não existe no github
 }
 function criarOPacotesArr($arr){
@@ -66,10 +66,10 @@ function criarOPacotesArr($arr){
 }
 function desinstalar($pacotesArr){
     // possíveis retornos do uninstall
-    //     if o pacote existe no PWD
+    //     TODO if o pacote existe no PWD
     //         apaga ele
     //         diz que o pacote foi apagado
-    //     else
+    //     TODO else
     //         diz que o pacote não está instalado
 }
 function instalar(){
@@ -86,9 +86,8 @@ function instalar(){
 }
 function instalarDependenciasNoPWD(){
     // //dependencias:
-    //     pasta PWD/basic/basicpack
-    //     inc
-    //     ^call
+    //     TODO pasta PWD/basic/basicpack
+    //     TODO inc, call
 }
 function instalarOPacote($pacotesArr){
     // possíveis retornos do install
@@ -104,23 +103,21 @@ function instalarOPacote($pacotesArr){
         instalarOPacoteNoPWDAPartirDoCache($pacoteStr)
     }elseif(oPacoteExisteNoGithub($pacoteStr)){
         // elseif o pacote existe no Github
-        //     baixar ele para o cache
-        //     instala ele no PWD
-        //     diz que o pacote foi instalado com sucesso
-        oPacoteFoiInstaladoComSucesso($pacoteStr);
+        instalarOPacoteAPartirDoGithub($pacoteStr);
     }else{
         // else (se o pacote não existe no pwd, no cache ou no github)
-        //     diz que o pacote não existe no github
+        //     ok diz que o pacote não existe no github
+        mensagemDeErro('O pacote não existe no Github');
     }
 }
 function instalarOPacoteAPartirDoGithub($pacoteStr){
-    //baixa o pacote do github
-    //salva o pacote no cache
-    //instala o pacote no pwd a partir do cache
+    //TODO baixar o pacote do github
+    //TODO salvar o pacote no cache
+    //instalar o pacote no pwd a partir do cache
     instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
 }
 function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
-    //instala o pacote no pwd
+    //TODO instala o pacote no pwd
     //     diz que o pacote foi instalado com sucesso
     oPacoteFoiInstaladoComSucesso($pacoteStr);
 }
@@ -135,13 +132,13 @@ function mensagemDeSucesso($msg){
     print $title.$msg.PHP_EOL;
 }
 function oPacoteExisteNoCache($pacoteStr){
-    //verifica se o pacote existe no cache
+    //TODO verifica se o pacote existe no cache
 }
 function oPacoteExisteNoGithub($pacoteStr){
-    //verifica se o pacote existe no Github
+    //TODO verifica se o pacote existe no Github
 }
 function oPacoteEstáInstaladoNoPWD($pacoteStr){
-    //verifica se o pacote está instalado no pwd
+    //TODO verifica se o pacote está instalado no pwd
 }
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
