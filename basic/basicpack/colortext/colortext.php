@@ -6,8 +6,8 @@ use Colors\Color;
 function colortext($textStr,$textColorStr,$boldBool=false){
     $c = new Color();
     if($boldBool){
-        return $c('Hello World!')->$textColorStr()->bold();
+        return $c($textStr)->$textColorStr()->bold();
     }else{
-        return $c('Hello World!')->$textColorStr();
+        return $c($textStr)->$textColorStr();
     }
 }

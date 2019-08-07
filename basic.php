@@ -10,7 +10,7 @@ inc([
     'error',
     'iscli'
 ]);
-if(iscli()){
+if(!iscli()){
     erroFatal('O Basic só funciona no modo CLI');
 }
 error(1);
@@ -48,8 +48,11 @@ function criarOPacotesArr($arr){
     return array_values($arr);
 }
 function erroFatal($msg){
-    print 'Erro fatal:'.PHP_EOL;
-    die(chr(9).$msg.PHP_EOL);
+    system("clear");
+    $title=colortext('Erro fatal:','red',true);
+    print $title.PHP_EOL;
+    $msg=colortext($msg,'white');
+    die($msg.PHP_EOL);
 }
 function install(){
     //extrair o nome dos pacotes criando o array $pacotesArr
