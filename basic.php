@@ -19,21 +19,54 @@ $fn=@$_SERVER['argv'][1];
 $update=false;
 switch($fn){
     case 'install':
-    install();
+    instalar();
     break;
     // case 'remove':
     // uninstall();
     // break;
     // case 'remove':
     // case 'uninstall':
-    // uninstall();
+    // desinstalar();
     // break;
     // case 'update':
-    // update();
+    // atualizar();
     // break;
     default:
     help();
     break;
+}
+//FUNÇÕES
+function atualizar($pacotesArr){
+    // possíveis retornos do update
+    //     if o pacote existe no PWD
+    //         apaga ele
+    //         baixar ele para o cache
+    //         instala ele no pwd
+    //         diz que o pacote foi atualizado com sucesso
+    //     elseif o pacote existe no cache
+    //         apaga ele
+    //         baixar ele para o cache
+    //         instala ele no pwd
+    //         diz que o pacote foi atualizado com sucesso
+    //     elseif o pacote existe na internet
+    //         baixar ele para o cache
+    //         instala ele no pwd
+    //         diz que o pacote foi atualizado com sucesso
+    //     else
+    //         diz que o pacote não existe no github
+}
+function criarOPacotesArr($arr){
+    unset($arr[0]);
+    unset($arr[1]);
+    return array_values($arr);
+}
+function desinstalar($pacotesArr){
+    // possíveis retornos do uninstall
+    //     if o pacote existe no PWD
+    //         apaga ele
+    //         diz que o pacote foi apagado
+    //     else
+    //         diz que o pacote não está instalado
 }
 function help(){
     print "Modo de usar:".PHP_EOL;
@@ -46,22 +79,7 @@ function help(){
     echo chr(9).'uninstall - Remove o(s) pacote(s)'.PHP_EOL;
     echo chr(9).'update - Atualiza o(s) pacote(s)'.PHP_EOL;
 }
-function criarOPacotesArr($arr){
-    unset($arr[0]);
-    unset($arr[1]);
-    return array_values($arr);
-}
-function mensagemDeErro($msg){
-    //ok imprime uma mensagem de erro colorida
-    $title=colortext('❌ ','red',true);
-    die($title.$msg.PHP_EOL);
-}
-function mensagemDeSucesso($msg){
-    //ok imprime uma mensagem de sucesso colorida
-    $title=colortext('✔️ ','green',true);
-    print $title.$msg.PHP_EOL;
-}
-function install(){
+function instalar(){
     //ok extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
     //ok verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
@@ -70,7 +88,7 @@ function install(){
     }
     //ok instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
-        instalarPacote($pacoteStr);
+        instalarOPacote($pacoteStr);
     }
 }
 function instalarDependenciasNoPWD(){
@@ -79,7 +97,7 @@ function instalarDependenciasNoPWD(){
     //     inc
     //     ^call
 }
-function instalarPacote($pacotesArr){
+function instalarOPacote($pacotesArr){
     // possíveis retornos do install
     // //instalação
     instalarDependenciasNoPWD();
@@ -102,16 +120,26 @@ function instalarPacote($pacotesArr){
         //     diz que o pacote não existe no github
     }
 }
-function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
-    //instala o pacote no pwd
-    //     diz que o pacote foi instalado com sucesso
-    oPacoteFoiInstaladoComSucesso($pacoteStr);
-}
 function instalarOPacoteAPartirDoGithub($pacoteStr){
     //baixa o pacote do github
     //salva o pacote no cache
     //instala o pacote no pwd a partir do cache
     instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
+}
+function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
+    //instala o pacote no pwd
+    //     diz que o pacote foi instalado com sucesso
+    oPacoteFoiInstaladoComSucesso($pacoteStr);
+}
+function mensagemDeErro($msg){
+    //ok imprime uma mensagem de erro colorida
+    $title=colortext('❌ ','red',true);
+    die($title.$msg.PHP_EOL);
+}
+function mensagemDeSucesso($msg){
+    //ok imprime uma mensagem de sucesso colorida
+    $title=colortext('✔️ ','green',true);
+    print $title.$msg.PHP_EOL;
 }
 function oPacoteExisteNoCache($pacoteStr){
     //verifica se o pacote existe no cache
@@ -125,32 +153,5 @@ function oPacoteEstáInstaladoNoPWD($pacoteStr){
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
     mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
-}
-function uninstall($pacotesArr){
-    // possíveis retornos do uninstall
-    //     if o pacote existe no PWD
-    //         apaga ele
-    //         diz que o pacote foi apagado
-    //     else
-    //         diz que o pacote não está instalado
-}
-function update($pacotesArr){
-    // possíveis retornos do update
-    //     if o pacote existe no PWD
-    //         apaga ele
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe no cache
-    //         apaga ele
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe na internet
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     else
-    //         diz que o pacote não existe no github
 }
 ?>
