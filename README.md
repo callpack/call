@@ -26,3 +26,7 @@ basic [comando] [nome do pacote]
 - remove - Remove um pacote
 - uninstall - Remove um pacote
 - update - Atualiza um pacote
+
+## Idéias em aberto
+- Instalar pacotes públicos de terceiros
+- Instalar pacotes privados
