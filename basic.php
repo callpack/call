@@ -11,7 +11,7 @@ inc([
     'iscli'
 ]);
 if(!iscli()){
-    erroFatal('O Basic só funciona no modo CLI');
+    mensagemDeErro('O '.$_ENV['NOME_DO_GERENCIADOR'].' só funciona no modo CLI');
 }
 error(1);
 $PWD=getcwd().'/';//get current working director
@@ -24,6 +24,7 @@ switch($fn){
     // case 'remove':
     // uninstall();
     // break;
+    // case 'remove':
     // case 'uninstall':
     // uninstall();
     // break;
@@ -35,25 +36,30 @@ switch($fn){
     break;
 }
 function help(){
-    print "Usage: basic command [optional package name]".PHP_EOL;
-    echo "Commands:".PHP_EOL;
-    echo chr(9).'help- Show this screen'.PHP_EOL;
-    echo chr(9).'install - Install package'.PHP_EOL;
-    echo chr(9).'uninstall - Remove package'.PHP_EOL;
-    echo chr(9).'update - Update package'.PHP_EOL;
+    print "Modo de usar";
+    print $_ENV['NOME_DO_GERENCIADOR']." comando ";
+    print "[nome do pacote opcional]".PHP_EOL;
+    echo "Comandos:".PHP_EOL;
+    echo chr(9).'help- Mostra essa tela de ajuda'.PHP_EOL;
+    echo chr(9).'install - Instala o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'remove - Remove o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'uninstall - Remove o(s) pacote(s)'.PHP_EOL;
+    echo chr(9).'update - Atualiza o(s) pacote(s)'.PHP_EOL;
 }
 function criarOPacotesArr($arr){
     unset($arr[0]);
     unset($arr[1]);
     return array_values($arr);
 }
-function erroFatal($msg){
+function mensagemDeErro($msg){
     //ok imprime uma mensagem de erro colorida
-    system("clear");
-    $title=colortext('Erro fatal:','red',true);
-    print $title.PHP_EOL;
-    $msg=colortext($msg,'white');
-    die($msg.PHP_EOL);
+    $title=colortext('❌ ','red',true);
+    die($title.$msg.PHP_EOL);
+}
+function mensagemDeSucesso($msg){
+    //ok imprime uma mensagem de sucesso colorida
+    $title=colortext('✔️ ','green',true);
+    print $title.$msg.PHP_EOL;
 }
 function install(){
     //ok extrair o nome dos pacotes criando o array $pacotesArr
@@ -67,7 +73,7 @@ function install(){
         instalarPacote($pacoteStr);
     }
 }
-funciton instalarNoPWD(){
+function instalarNoPWD(){
     // //dependencias:
     //     pasta PWD/basic/basicpack
     //     inc
@@ -80,15 +86,18 @@ function instalarPacote($pacotesArr){
     // if o pacote existe no PWD
     if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
         //     diz que o pacote já está instalado
+        oPacoteFoiInstaladoComSucesso($pacoteStr);
     }elseif(oPacoteExisteNoCache($pacoteStr)){
         // elseif o pacote existe no cache
         //     instala ele no PWD
         //     diz que o pacote foi instalado com sucesso
+        oPacoteFoiInstaladoComSucesso($pacoteStr);
     }elseif(oPacoteExisteNoGithub($pacoteStr)){
         // elseif o pacote existe no Github
         //     baixar ele para o cache
         //     instala ele no PWD
         //     diz que o pacote foi instalado com sucesso
+        oPacoteFoiInstaladoComSucesso($pacoteStr);
     }else{
         // else (se o pacote não existe no pwd, no cache ou no github)
         //     diz que o pacote não existe no github
@@ -102,6 +111,10 @@ function oPacoteExisteNoGithub($pacoteStr){
 }
 function oPacoteEstáInstaladoNoPWD($pacoteStr){
     //verifica se o pacote está instalado no pwd
+}
+function oPacoteFoiInstaladoComSucesso($pacoteStr){
+    $pacoteStr=colortext($pacoteStr,'white',true);
+    mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
 }
 function uninstall($pacotesArr){
     // possíveis retornos do uninstall
