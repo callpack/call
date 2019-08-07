@@ -48,6 +48,7 @@ function criarOPacotesArr($arr){
     return array_values($arr);
 }
 function erroFatal($msg){
+    //ok imprime uma mensagem de erro colorida
     system("clear");
     $title=colortext('Erro fatal:','red',true);
     print $title.PHP_EOL;
@@ -55,38 +56,52 @@ function erroFatal($msg){
     die($msg.PHP_EOL);
 }
 function install(){
-    //extrair o nome dos pacotes criando o array $pacotesArr
+    //ok extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
-    //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
-    if(!oPacoteEstáInstalado('inc')){
+    //ok verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
+    if(!oPacoteEstáInstaladoNoPWD('inc')){
         $pacotesArr[]='inc';
     }
-    //instala cada pacote do $pacotesArr
+    //ok instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
         instalarPacote($pacoteStr);
     }
 }
+funciton instalarNoPWD(){
+    // //dependencias:
+    //     pasta PWD/basic/basicpack
+    //     inc
+    //     ^call
+}
 function instalarPacote($pacotesArr){
     // possíveis retornos do install
-    // //dependencias
-    // pasta PWD/basic/getbasic
-    // inc
-    // ^call
     // //instalação
+    instalarNoPWD();
     // if o pacote existe no PWD
-    //     diz que o pacote já está instalado
-    // elseif o pacote existe no cache
-    //     instala ele no PWD
-    //     diz que o pacote foi instalado com sucesso
-    // elseif o pacote existe na internet
-    //     baixar ele para o cache
-    //     instala ele no PWD
-    //     diz que o pacote foi instalado com sucesso
-    // else
-    //     diz que o pacote não existe no github
+    if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
+        //     diz que o pacote já está instalado
+    }elseif(oPacoteExisteNoCache($pacoteStr)){
+        // elseif o pacote existe no cache
+        //     instala ele no PWD
+        //     diz que o pacote foi instalado com sucesso
+    }elseif(oPacoteExisteNoGithub($pacoteStr)){
+        // elseif o pacote existe no Github
+        //     baixar ele para o cache
+        //     instala ele no PWD
+        //     diz que o pacote foi instalado com sucesso
+    }else{
+        // else (se o pacote não existe no pwd, no cache ou no github)
+        //     diz que o pacote não existe no github
+    }
 }
-function oPacoteEstáInstalado($pacoteStr){
-
+function oPacoteExisteNoCache($pacoteStr){
+    //verifica se o pacote existe no cache
+}
+function oPacoteExisteNoGithub($pacoteStr){
+    //verifica se o pacote existe no Github
+}
+function oPacoteEstáInstaladoNoPWD($pacoteStr){
+    //verifica se o pacote está instalado no pwd
 }
 function uninstall($pacotesArr){
     // possíveis retornos do uninstall
