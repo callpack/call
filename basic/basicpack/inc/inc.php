@@ -10,7 +10,7 @@ function inc($includes){
     }
     foreach ($includesList as $include) {
         $include=mb_strtolower($include);
-        $filename=ROOT.'basic/getbasic/'.$include.'/'.$include.'.php';
+        $filename=ROOT.'basic/basicpack/'.$include.'/'.$include.'.php';
         if(file_exists($filename)){
             require_once($filename);
         }else{

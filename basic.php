@@ -4,13 +4,14 @@
 //06 de agosto de 2019
 require 'basic/basic.php';
 inc([
+    'colortext',
     'download',
     'env',
     'error',
     'iscli'
 ]);
 if(iscli()){
-    mensagemDeErroFatal('O Basic só funciona no modo CLI');
+    erroFatal('O Basic só funciona no modo CLI');
 }
 error(1);
 $PWD=getcwd().'/';//get current working director
@@ -46,6 +47,10 @@ function criarOPacotesArr($arr){
     unset($arr[1]);
     return array_values($arr);
 }
+function erroFatal($msg){
+    print 'Erro fatal:'.PHP_EOL;
+    die(chr(9).$msg.PHP_EOL);
+}
 function install(){
     //extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
@@ -76,10 +81,6 @@ function instalarPacote($pacotesArr){
     //     diz que o pacote foi instalado com sucesso
     // else
     //     diz que o pacote não existe no github
-}
-function mensagemDeErroFatal($msg){
-    print 'Erro fatal:'.PHP_EOL;
-    die(chr(9).$msg.PHP_EOL);
 }
 function oPacoteEstáInstalado($pacoteStr){
 

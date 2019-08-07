@@ -4,5 +4,6 @@
     "error",
     "inc",
     "env",
-    "iscli"
+    "iscli",
+    "colortext"
 ]
