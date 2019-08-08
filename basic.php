@@ -10,7 +10,6 @@ inc([
     'error',
     'iscli'
 ]);
-die($PWD);
 if(!iscli()){
     mensagemDeErro('O '.$_ENV['NOME_DO_GERENCIADOR'].' só funciona no modo CLI');
 }
@@ -42,26 +41,33 @@ switch($fn){
 }
 //FUNÇÕES
 function atualizar($pacotesArr){
-    // possíveis retornos do update
-    //     TODO if o pacote existe no PWD
+    // TODO possíveis retornos do update
+    //     if o pacote existe no PWD
     //         apaga ele
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     TODO elseif o pacote existe no cache
+    //     elseif o pacote existe no cache
     //         apaga ele
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     TODO elseif o pacote existe na internet
+    //     elseif o pacote existe na internet
     //         baixar ele para o cache
     //         instala ele no pwd
     //         diz que o pacote foi atualizado com sucesso
-    //     TODO else
+    //     else
     //         diz que o pacote não existe no github
 }
 function criarAPastaDeDestinoNoPWD(){
-    //TODO criar a pasta de destino no pwd
+    //criar a pasta de destino no pwd
+    $PWD=getPWD();
+    $filename=$PWD.$_ENV['NOME_DO_GERENCIADOR'];
+    if(file_exists($filename)){
+        return true;
+    }else{
+        return mkdir($filename);
+    }
 }
 function criarOPacotesArr($arr){
     unset($arr[0]);
@@ -76,14 +82,17 @@ function desinstalar($pacotesArr){
     //     TODO else
     //         diz que o pacote não está instalado
 }
+function getPWD(){
+    return getcwd().'/';
+}
 function instalar(){
-    //ok extrair o nome dos pacotes criando o array $pacotesArr
+    //extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
-    //ok verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
+    //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
     if(!oPacoteEstáInstaladoNoPWD('inc')){
         $pacotesArr[]='inc';
     }
-    //ok instala cada pacote do $pacotesArr
+    //instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
         instalarOPacote($pacoteStr);
     }
@@ -97,22 +106,18 @@ function instalarDependenciasNoPWD(){
         'call',
         'inc'
     ];
-        $pularDependencias=true;
+    $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
         instalarOPacote($pacotesStr,$pularDependencias);
     }
 }
-function instalarOPacote(
-    $pacotesStr,
-    $pularDependencias=false,
-    $pularCache=false
-){
+function instalarOPacote($pacotesStr,$pularDependencias=false,$pularCache=false){
     // possíveis retornos do install
     // //instalação
     if($pularDependencias==false){
         instalarDependenciasNoPWD();
     }
-    // ok if o pacote existe no PWD
+    // if o pacote existe no PWD
     if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
         //     diz que o pacote já está instalado
         oPacoteFoiInstaladoComSucesso($pacoteStr);
@@ -125,7 +130,7 @@ function instalarOPacote(
         instalarOPacoteAPartirDoGithub($pacoteStr);
     }else{
         // else (se o pacote não existe no pwd, no cache ou no github)
-        //     ok diz que o pacote não existe no github
+        //     diz que o pacote não existe no github
         mensagemDeErro('O pacote não existe no Github');
     }
 }
@@ -141,12 +146,12 @@ function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
     oPacoteFoiInstaladoComSucesso($pacoteStr);
 }
 function mensagemDeErro($msg){
-    //ok imprime uma mensagem de erro colorida
+    //imprime uma mensagem de erro colorida
     $title=colortext('❌ ','red',true);
     die($title.$msg.PHP_EOL);
 }
 function mensagemDeSucesso($msg){
-    //ok imprime uma mensagem de sucesso colorida
+    //imprime uma mensagem de sucesso colorida
     $title=colortext('✔️ ','green',true);
     print $title.$msg.PHP_EOL;
 }
