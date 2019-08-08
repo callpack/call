@@ -147,11 +147,17 @@ function instalarDependenciasNoPWD(){
     //     pasta PWD/basic/basicpack
     criarAPastaDeDestinoNoPWD();
     //     inc, call
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/basic.php';
+    if(!file_exists($filename)){
+        $basicDoCache=__DIR__.'/'.$nomeDoGerenciador.'/basic.php';
+        copy($basicDoCache,$filename);
+    }
     $pacotesArr=[
         'call',
         'inc'
     ];
-    $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
         if(!oPacoteEstaNoPWD($pacoteStr)){
             instalarOPacote($pacoteStr);
