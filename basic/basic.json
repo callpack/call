@@ -26,5 +26,8 @@
     "inc",
     "call",
     "inc",
+    "test",
+    "call",
+    "inc",
     "test"
 ]
