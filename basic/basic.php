@@ -6,4 +6,4 @@ $key=key($arr);
 unset($arr[$key]);
 $str=implode('/',$arr).'/';
 define("ROOT",$str);
-require 'basicpack/inc/inc.php';
+require ROOT.'basic/basicpack/inc/inc.php';

@@ -15,7 +15,7 @@ function inc($includes){
             require_once($filename);
         }else{
             print $filename.PHP_EOL;
-            die('<b>Error: </b><br>inc <b>'.$include.'</b> not found');
+            die('<b>Errorx: </b><br>inc <b>'.$include.'</b> not found');
         }
     }
 }
