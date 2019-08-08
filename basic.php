@@ -232,9 +232,7 @@ function ocorreuUmErroAoRemoverOPacote($pacoteStr){
     return mensagemDeErro('Ocorreu um erro ao tentar remover o pacote '.$pacoteStr);
 }
 function oPacoteEstaNoCache($pacoteStr){
-    //verifica se o pacote existe no cache
-    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
-    $filename=__DIR__.$nomeDoGerenciador.'/cache/'.$pacoteStr.'.zip';
+    $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
     if(file_exists($filename)){
         return true;
     }else{
