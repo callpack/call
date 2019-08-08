@@ -174,9 +174,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
             $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
         }else{
             //verifica se existe no cache
-            $oPacoteEstaNoCache=oPacoteEstaNoCache($pacoteStr);
-            var_dump($oPacoteEstaNoCache);
-            if($oPacoteEstaNoCache){
+            if(oPacoteEstaNoCache($pacoteStr)){
                 $foiInstalado=instalarOPacoteAPartirDoCache($pacoteStr);
             }else{
                 print 'github2';
@@ -237,10 +235,8 @@ function ocorreuUmErroAoRemoverOPacote($pacoteStr){
 function oPacoteEstaNoCache($pacoteStr){
     $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
     if(file_exists($filename)){
-        print $filename.' está no cache'.PHP_EOL;
         return true;
     }else{
-        print $filename.' não está no cache'.PHP_EOL;
         return false;
     }
 }
