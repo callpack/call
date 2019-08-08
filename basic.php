@@ -135,11 +135,11 @@ function instalar($pacotesArr){
     foreach ($pacotesArr as $pacoteStr) {
         $statusDaInstalação=instalarOPacote($pacoteStr);
         if($statusDaInstalação==true){
-            return oPacoteFoiInstaladoComSucesso($pacoteStr);
+            oPacoteFoiInstaladoComSucesso($pacoteStr);
         }elseif(is_null($statusDaInstalação)){
-            return oPacoteJaEstavaInstalado($pacoteStr);
+            oPacoteJaEstavaInstalado($pacoteStr);
         }else{
-            return ocorreuUmErroAoInstalarOPacote($pacoteStr);
+            ocorreuUmErroAoInstalarOPacote($pacoteStr);
         }
     }
 }

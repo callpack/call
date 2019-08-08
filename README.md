@@ -21,7 +21,7 @@ chmod +x /usr/bin/basic
 ## Como usar
 Execute o comando no terminal:
 ```bash
-basic [comando] [nome do pacote]
+basic [comando] [nome do(s) pacote(s)]
 ```
 Por exemplo, para instalar o pacote de exemplo:
 ```bash
