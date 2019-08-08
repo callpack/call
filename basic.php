@@ -10,6 +10,7 @@ inc([
     'error',
     'iscli'
 ]);
+die($PWD);
 if(!iscli()){
     mensagemDeErro('O '.$_ENV['NOME_DO_GERENCIADOR'].' só funciona no modo CLI');
 }
@@ -59,6 +60,9 @@ function atualizar($pacotesArr){
     //     TODO else
     //         diz que o pacote não existe no github
 }
+function criarAPastaDeDestinoNoPWD(){
+    //TODO criar a pasta de destino no pwd
+}
 function criarOPacotesArr($arr){
     unset($arr[0]);
     unset($arr[1]);
@@ -86,13 +90,28 @@ function instalar(){
 }
 function instalarDependenciasNoPWD(){
     // //dependencias:
-    //     TODO pasta PWD/basic/basicpack
-    //     TODO inc, call
+    //     pasta PWD/basic/basicpack
+    criarAPastaDeDestinoNoPWD();
+    //     inc, call
+    $pacotesArr=[
+        'call',
+        'inc'
+    ];
+        $pularDependencias=true;
+    foreach ($pacotesArr as $pacoteStr) {
+        instalarOPacote($pacotesStr,$pularDependencias);
+    }
 }
-function instalarOPacote($pacotesArr){
+function instalarOPacote(
+    $pacotesStr,
+    $pularDependencias=false,
+    $pularCache=false
+){
     // possíveis retornos do install
     // //instalação
-    instalarDependenciasNoPWD();
+    if($pularDependencias==false){
+        instalarDependenciasNoPWD();
+    }
     // ok if o pacote existe no PWD
     if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
         //     diz que o pacote já está instalado
@@ -100,7 +119,7 @@ function instalarOPacote($pacotesArr){
     }elseif(oPacoteExisteNoCache($pacoteStr)){
         // elseif o pacote existe no cache
         //     instala ele no PWD
-        instalarOPacoteNoPWDAPartirDoCache($pacoteStr)
+        instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
     }elseif(oPacoteExisteNoGithub($pacoteStr)){
         // elseif o pacote existe no Github
         instalarOPacoteAPartirDoGithub($pacoteStr);
