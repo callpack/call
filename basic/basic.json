@@ -1,26 +1,12 @@
-{
-    "0": "download",
-    "2": "error",
-    "4": "env",
-    "5": "iscli",
-    "6": "colortext",
-    "7": "unzip",
-    "8": "isdownloadable",
-    "103": "call",
-    "104": "inc",
-    "106": "call",
-    "107": "inc",
-    "109": "call",
-    "110": "inc",
-    "112": "call",
-    "113": "inc",
-    "115": "call",
-    "116": "inc",
-    "118": "call",
-    "119": "inc",
-    "121": "call",
-    "122": "inc",
-    "124": "call",
-    "125": "inc",
-    "126": "test"
-}
+[
+    "call",
+    "colortext",
+    "download",
+    "env",
+    "error",
+    "inc",
+    "iscli",
+    "isdownloadable",
+    "test",
+    "unzip"
+]

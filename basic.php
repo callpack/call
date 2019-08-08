@@ -48,6 +48,9 @@ function adicionarOPacoteAoJson($pacoteStr){
     }
     $arr[]=$pacoteStr;
     $arr=array_filter($arr);
+    $arr=array_unique($arr);
+    asort($arr);
+    $arr=array_values($arr);
     $str=json_encode($arr,JSON_PRETTY_PRINT);
     file_put_contents($filename,$str);
 }
@@ -301,6 +304,9 @@ function removerOPacoteDoJson($pacoteStr){
     }
     $arr[]=$pacoteStr;
     $arr=array_filter($arr);
+    $arr=array_unique($arr);
+    asort($arr);
+    $arr=array_values($arr);
     foreach ($arr as $key => $value) {
         if($value==$pacoteStr){
             unset($arr[$key]);
