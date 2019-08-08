@@ -44,7 +44,7 @@ switch($fn){
 //FUNÇÕES
 function atualizar($pacotesArr){
     $pularCache=true;
-    instalarOPacote($pacoteStr,$pularCache)
+    instalarOPacote($pacoteStr,$pularCache);
 }
 function baixarOPacoteDoGithub($pacoteStr){
     //baixar o pacote do github
