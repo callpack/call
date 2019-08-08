@@ -108,6 +108,7 @@ function extrairOPacoteDoCacheParaOPWD($pacoteStr){
         system("mv $oldName $newName");
         $oldName=$destination.'/'.$pacoteStr;
         system("rm -rf $oldName");
+        echo "apagando $oldName".PHP_EOL;
         $oldName=$destination.'/'.$pacoteStr.'-master';
         $newName=$destination.'/'.$pacoteStr;
         system("mv $oldName $newName");
