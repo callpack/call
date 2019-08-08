@@ -105,7 +105,7 @@ function extrairOPacoteDoCacheParaOPWD($pacoteStr){
     if(unzip($filename,$destination)){
         $oldName=$destination.'/'.$pacoteStr.'-master';
         $newName=$destination.'/'.$pacoteStr;
-        exec("mv $oldname $newname");
+        exec("mv $oldName $newName");
         return true;
     }else{
         return false;
