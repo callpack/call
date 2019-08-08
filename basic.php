@@ -179,7 +179,7 @@ function instalarOPacoteAPartirDoGithub($pacoteStr){
     //baixar o pacote do github
     $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
     //salvar o pacote no cache
-    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/'.$pacoteStr.'.zip';
+    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/cache/'.$pacoteStr.'.zip';
     if(file_exists($filename)){
         removerPacoteDoCache($pacoteStr);
     }
