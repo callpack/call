@@ -152,7 +152,7 @@ function instalarDependenciasNoPWD(){
         instalarOPacote($pacoteStr,$pularDependencias);
     }
 }
-function instalarOPacote($pacotesStr,$pularDependencias=false,$pularCache=false){
+function instalarOPacote($pacoteStr,$pularDependencias=false,$pularCache=false){
     // possíveis retornos do install
     // //instalação
     if($pularDependencias==false){
