@@ -112,7 +112,7 @@ function desinstalar($pacotesArr){
     //         diz que o pacote não está instalado
 }
 function extrairOPacoteDoCacheParaOPWD($pacoteStr){
-    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/cache/'.$pacoteStr.'.zip';
+    $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
     $PWD=getPWD();
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
