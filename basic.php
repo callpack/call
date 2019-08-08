@@ -170,6 +170,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
         return null;
     }else{
         if($pularCache){
+            print 'github1';
             $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
         }else{
             //verifica se existe no cache
@@ -177,6 +178,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
             if($oPacoteEstaNoCache){
                 $foiInstalado=instalarOPacoteAPartirDoCache($pacoteStr);
             }else{
+                print 'github2';
                 $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
             }
         }
@@ -185,7 +187,6 @@ function instalarOPacote($pacoteStr,$pularCache=false){
     }
 }
 function instalarOPacoteAPartirDoGithub($pacoteStr){
-    print 'github'.PHP_EOL;
     if(oPacoteEstaNoGithub($pacoteStr)){
         //baixar o pacote do github
         $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
