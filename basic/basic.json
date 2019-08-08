@@ -5,5 +5,7 @@
     "inc",
     "env",
     "iscli",
-    "colortext"
+    "colortext",
+    "unzip",
+    "isdownloadable"
 ]

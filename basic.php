@@ -6,9 +6,11 @@ require 'basic/basic.php';
 inc([
     'colortext',
     'download',
+    'isdownloadable',
     'env',
     'error',
-    'iscli'
+    'iscli',
+    'unzip'
 ]);
 if(!iscli()){
     mensagemDeErro('O '.$_ENV['NOME_DO_GERENCIADOR'].' só funciona no modo CLI');
@@ -59,10 +61,37 @@ function atualizar($pacotesArr){
     //     else
     //         diz que o pacote não existe no github
 }
+function baixarOPacoteDoGithub($pacoteStr){
+    //baixar o pacote do github
+    $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
+    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr'/archive/master.zip';
+    return download($urlStr);
+}
+function criarAPastaCache(){
+    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/cache';
+    if(file_exists($filename)){
+        return true;
+    }else{
+        return mkdir($filename);
+    }
+}
 function criarAPastaDeDestinoNoPWD(){
     //criar a pasta de destino no pwd
     $PWD=getPWD();
-    $filename=$PWD.$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub;
+    if(file_exists($filename)){
+        return true;
+    }else{
+        return mkdir($filename);
+    }
+}
+function criarAPastaDoPacoteNoPWD($pacoteStr){
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr;
     if(file_exists($filename)){
         return true;
     }else{
@@ -75,12 +104,24 @@ function criarOPacotesArr($arr){
     return array_values($arr);
 }
 function desinstalar($pacotesArr){
-    // possíveis retornos do uninstall
-    //     TODO if o pacote existe no PWD
+    // TODO possíveis retornos do uninstall
+    //     if o pacote existe no PWD
     //         apaga ele
     //         diz que o pacote foi apagado
-    //     TODO else
+    //     else
     //         diz que o pacote não está instalado
+}
+function extrairOPacoteDoCacheParaOPWD($pacoteStr){
+    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/cache/'.$pacoteStr.'.zip';
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
+    $destination=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr;
+    if(unzip($filename,$destination)){
+        return true;
+    }else{
+        return false;
+    }
 }
 function getPWD(){
     return getcwd().'/';
@@ -135,13 +176,31 @@ function instalarOPacote($pacotesStr,$pularDependencias=false,$pularCache=false)
     }
 }
 function instalarOPacoteAPartirDoGithub($pacoteStr){
-    //TODO baixar o pacote do github
-    //TODO salvar o pacote no cache
+    //baixar o pacote do github
+    $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
+    //salvar o pacote no cache
+    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/'.$pacoteStr.'.zip';
+    if(file_exists($filename)){
+        removerPacoteDoCache($pacoteStr);
+    }
+    file_put_contents($filename,$conteudoDoPacoteStr);
     //instalar o pacote no pwd a partir do cache
     instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
 }
 function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
-    //TODO instala o pacote no pwd
+    //instala o pacote no pwd
+    extrairOPacoteDoCacheParaOPWD($pacoteStr);
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGerenciador.'.json';
+    if(file_exists($filename)){
+        $str=file_get_contents($filename);
+        $arr=json_decode($str);
+    }
+    $arr[]=$pacoteStr;
+    $arr=array_filter($arr);
+    $str=json_encode($arr,JSON_PRETTY_PRINT);
+    file_put_contents($filename,$str);
     //     diz que o pacote foi instalado com sucesso
     oPacoteFoiInstaladoComSucesso($pacoteStr);
 }
@@ -156,17 +215,39 @@ function mensagemDeSucesso($msg){
     print $title.$msg.PHP_EOL;
 }
 function oPacoteExisteNoCache($pacoteStr){
-    //TODO verifica se o pacote existe no cache
+    //verifica se o pacote existe no cache
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=__DIR__.$nomeDoGerenciador.'/cache/'.$pacoteStr.'.zip';
+    if(file_exists($filename)){
+        return true;
+    }else{
+        return false;
+    }
 }
 function oPacoteExisteNoGithub($pacoteStr){
-    //TODO verifica se o pacote existe no Github
+    //verifica se o pacote existe no Github
+    $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
+    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr'/archive/master.zip';
+    return isdownloadable($urlStr);
 }
 function oPacoteEstáInstaladoNoPWD($pacoteStr){
-    //TODO verifica se o pacote está instalado no pwd
+    //verifica se o pacote está instalado no pwd
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr.'/';
+    $filename.=$pacoteStr.'.php';
+    return file_exists($filename);
 }
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
     mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
+}
+function removerPacoteDoCache($pacoteStr){
+    //removerPacoteDoCache
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=__DIR__.$nomeDoGerenciador.'/cache/'.$pacoteStr.'.zip';
+    unlink($filename);
 }
 function telaDeAjuda(){
     print "Modo de usar:".PHP_EOL;
