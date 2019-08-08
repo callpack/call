@@ -82,11 +82,15 @@ function criarAPastaDeDestinoNoPWD(){
     $PWD=getPWD();
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
+    $filename=$PWD.$nomeDoGerenciador;
+    if(!file_exists($filename)){
+        mkdir($filename);
+    }
     $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub;
     if(file_exists($filename)){
         return true;
     }else{
-        return mkdir($filename);
+        mkdir($filename);
     }
 }
 function criarAPastaDoPacoteNoPWD($pacoteStr){
