@@ -185,6 +185,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
     }
 }
 function instalarOPacoteAPartirDoGithub($pacoteStr){
+    print 'github'.PHP_EOL;
     if(oPacoteEstaNoGithub($pacoteStr)){
         //baixar o pacote do github
         $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
