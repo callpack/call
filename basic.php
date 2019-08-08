@@ -2,7 +2,7 @@
 <?php
 //Criado por Anderson Ismael
 //06 de agosto de 2019
-require 'basic/basic.php';
+require __DIR__.'/basic/basic.php';
 inc([
     'colortext',
     'download',
