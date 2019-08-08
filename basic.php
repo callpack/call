@@ -170,14 +170,13 @@ function instalarOPacote($pacoteStr,$pularCache=false){
         return null;
     }else{
         if($pularCache){
-            print 'github1';
             $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
         }else{
             //verifica se existe no cache
-            if(oPacoteEstaNoCache($pacoteStr)){
+            $oPacoteEstaNoCache=oPacoteEstaNoCache($pacoteStr);
+            if($oPacoteEstaNoCache){
                 $foiInstalado=instalarOPacoteAPartirDoCache($pacoteStr);
             }else{
-                print 'github2';
                 $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
             }
         }
