@@ -64,7 +64,7 @@ function atualizar($pacotesArr){
 function baixarOPacoteDoGithub($pacoteStr){
     //baixar o pacote do github
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
-    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr'/archive/master.zip';
+    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr.'/archive/master.zip';
     return download($urlStr);
 }
 function criarAPastaCache(){
