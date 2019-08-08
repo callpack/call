@@ -18,9 +18,24 @@ chmod +x /usr/bin/basic
 ```
 
 # Como usar
+Execute o comando no terminal:
 ```bash
 basic [comando] [nome do pacote]
 ```
+Por exemplo, para instalar o pacote de exemplo:
+```bash
+basic install test
+```
+Então adicione o seguinte código ao PHP:
+```php
+<?php
+require 'basic/basic.php';
+inc([
+    'test'    
+]);
+test();//função pronta para ser usada
+```
+
 ## Comandos
 - help - Mostra a tela de ajuda
 - install - Instala o(s) pacote(s)
