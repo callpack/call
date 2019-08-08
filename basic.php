@@ -227,7 +227,7 @@ function oPacoteExisteNoCache($pacoteStr){
 function oPacoteExisteNoGithub($pacoteStr){
     //verifica se o pacote existe no Github
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
-    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr'/archive/master.zip';
+    $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr.'/archive/master.zip';
     return isdownloadable($urlStr);
 }
 function oPacoteEstáInstaladoNoPWD($pacoteStr){
