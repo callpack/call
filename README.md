@@ -1,11 +1,11 @@
 # Gerenciador de pacotes procedurais PHP
 ## Funcionalidades (features)
-1. baixar pacotes da organização [Basic](https://github.com/basicpack)
-2. fazer o cache dos pacotes
-3. instalar os pacotes
-4. atualizar os pacotes
-5. remover os pacotes
-6. incorporar os pacotes facilmente através da função inc()
+1. Baixar pacotes da organização [Basic](https://github.com/basicpack)
+2. Fazer o cache local dos pacotes
+3. Instalar os pacotes
+4. Atualizar os pacotes
+5. Remover os pacotes
+6. Incorporar os pacotes facilmente através da função inc()
 
 ## Instalação
 ```bash
