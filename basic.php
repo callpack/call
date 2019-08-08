@@ -101,8 +101,11 @@ function extrairOPacoteDoCacheParaOPWD($pacoteStr){
     $PWD=getPWD();
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
-    $destination=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr;
+    $destination=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub;
     if(unzip($filename,$destination)){
+        $oldName=$destination.'/'.$pacoteStr.'-master';
+        $newName=$destination.'/'.$pacoteStr;
+        rename($oldName,$newName);
         return true;
     }else{
         return false;
