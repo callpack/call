@@ -13,5 +13,11 @@
     "test",
     "call",
     "inc",
+    "inc",
+    "call",
+    "inc",
+    "test",
+    "call",
+    "inc",
     "inc"
 ]

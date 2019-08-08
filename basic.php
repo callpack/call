@@ -43,23 +43,8 @@ switch($fn){
 }
 //FUNÇÕES
 function atualizar($pacotesArr){
-    // TODO possíveis retornos do update
-    //     if o pacote existe no PWD
-    //         apaga ele
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe no cache
-    //         apaga ele
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     elseif o pacote existe na internet
-    //         baixar ele para o cache
-    //         instala ele no pwd
-    //         diz que o pacote foi atualizado com sucesso
-    //     else
-    //         diz que o pacote não existe no github
+    $pularCache=true;
+    instalarOPacote($pacoteStr,$pularCache)
 }
 function baixarOPacoteDoGithub($pacoteStr){
     //baixar o pacote do github
@@ -127,6 +112,7 @@ function getPWD(){
     return getcwd().'/';
 }
 function instalar(){
+    instalarDependenciasNoPWD();
     //extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
     //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
@@ -149,20 +135,17 @@ function instalarDependenciasNoPWD(){
     ];
     $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
-        instalarOPacote($pacoteStr,$pularDependencias);
+        instalarOPacote($pacoteStr);
     }
 }
-function instalarOPacote($pacoteStr,$pularDependencias=false,$pularCache=false){
+function instalarOPacote($pacoteStr,$pularCache=false){
     // possíveis retornos do install
     // //instalação
-    if($pularDependencias==false){
-        instalarDependenciasNoPWD();
-    }
     // if o pacote existe no PWD
-    if(oPacoteEstáInstaladoNoPWD($pacoteStr)){
+    if(oPacoteEstáInstaladoNoPWD($pacoteStr) && $pularCache==false){
         //     diz que o pacote já está instalado
         oPacoteFoiInstaladoComSucesso($pacoteStr);
-    }elseif(oPacoteExisteNoCache($pacoteStr)){
+    }elseif(oPacoteExisteNoCache($pacoteStr) && $pularCache==false){
         // elseif o pacote existe no cache
         //     instala ele no PWD
         instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
