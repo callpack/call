@@ -1,4 +1,5 @@
-# Funcionalidades (features)
+# Gerenciador de pacotes procedurais PHP
+## Funcionalidades (features)
 1. baixar pacotes da organização [Basic](https://github.com/basicpack)
 2. fazer o cache dos pacotes
 3. instalar os pacotes
@@ -6,7 +7,7 @@
 5. remover os pacotes
 6. incorporar os pacotes facilmente através da função inc()
 
-# Instalação
+## Instalação
 ```bash
 rm -rf ~/.config/basic &&
 cd ~/.config &&
@@ -17,7 +18,7 @@ sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
 chmod +x /usr/bin/basic
 ```
 
-# Como usar
+## Como usar
 Execute o comando no terminal:
 ```bash
 basic [comando] [nome do pacote]
@@ -36,13 +37,13 @@ inc([
 test();//função pronta para ser usada
 ```
 
-## Comandos
+### Comandos
 - help - Mostra a tela de ajuda
 - install - Instala o(s) pacote(s)
 - remove - Remove o(s) pacote(s)
 - uninstall - Remove o(s) pacote(s)
 - update - Atualiza o(s) pacote(s)
 
-## Idéias em aberto
+### Idéias em aberto
 - Instalar pacotes públicos de terceiros
 - Instalar pacotes privados
