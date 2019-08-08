@@ -68,7 +68,7 @@ function baixarOPacoteDoGithub($pacoteStr){
     return download($urlStr);
 }
 function criarAPastaCache(){
-    $filename=__DIR__.$_ENV['NOME_DO_GERENCIADOR'].'/cache';
+    $filename=__DIR__.'/cache';
     if(file_exists($filename)){
         return true;
     }else{
