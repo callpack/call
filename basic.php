@@ -222,7 +222,11 @@ function oPacoteEstáInstaladoNoPWD($pacoteStr){
     $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
     $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr.'/';
     $filename.=$pacoteStr.'.php';
-    return file_exists($filename);
+    if(file_exists($filename)){
+        return true;
+    }else {
+        return false;
+    }
 }
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
