@@ -212,8 +212,8 @@ function mensagemDeErro($msg){
 }
 function mensagemDeSucesso($msg){
     //imprime uma mensagem de sucesso colorida
-    $title=colortext('✔️ ','green',true);
-    print $title.$msg.PHP_EOL;
+    $title=colortext('✔️','green',true);
+    print $title.' '.$msg.PHP_EOL;
 }
 function oPacoteExisteNoCache($pacoteStr){
     //verifica se o pacote existe no cache
@@ -247,8 +247,10 @@ function oPacoteFoiInstaladoComSucesso($pacoteStr){
 function removerPacoteDoCache($pacoteStr){
     //removerPacoteDoCache
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
-    $filename=__DIR__.$nomeDoGerenciador.'/cache/'.$pacoteStr.'.zip';
-    unlink($filename);
+    $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
+    if(file_exists($filename)){
+        unlink($filename);
+    }
 }
 function telaDeAjuda(){
     print "Modo de usar:".PHP_EOL;
