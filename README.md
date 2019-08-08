@@ -26,7 +26,7 @@ Por exemplo, para instalar o pacote de exemplo:
 ```bash
 basic install test
 ```
-Então adicione o seguinte código ao PHP:
+Então adicione o código de incorporação ao PHP:
 ```php
 <?php
 require 'basic/basic.php';
