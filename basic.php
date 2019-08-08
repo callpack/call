@@ -133,8 +133,11 @@ function instalar($pacotesArr){
     //extrair o nome dos pacotes criando o array $pacotesArr
     //instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
-        if(instalarOPacote($pacoteStr)){
+        $statusDaInstalação=instalarOPacote($pacoteStr);
+        if($statusDaInstalação==true){
             return oPacoteFoiInstaladoComSucesso($pacoteStr);
+        }elseif(is_null($statusDaInstalação)){
+            return oPacoteJaEstavaInstalado($pacoteStr);
         }else{
             return ocorreuUmErroAoInstalarOPacote($pacoteStr);
         }
@@ -166,7 +169,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
     //verifica se já tá instalado
     $oPacoteEstaNoPWD=oPacoteEstaNoPWD($pacoteStr);
     if($oPacoteEstaNoPWD && $pularCache==false){
-        return oPacoteJaEstavaInstalado($pacoteStr);
+        return null;
     }else{
         if($pularCache){
             $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
