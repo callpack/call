@@ -175,6 +175,7 @@ function instalarOPacote($pacoteStr,$pularCache=false){
         }else{
             //verifica se existe no cache
             $oPacoteEstaNoCache=oPacoteEstaNoCache($pacoteStr);
+            var_dump($oPacoteEstaNoCache);
             if($oPacoteEstaNoCache){
                 $foiInstalado=instalarOPacoteAPartirDoCache($pacoteStr);
             }else{
@@ -235,7 +236,6 @@ function ocorreuUmErroAoRemoverOPacote($pacoteStr){
 }
 function oPacoteEstaNoCache($pacoteStr){
     $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
-    print $filename.PHP_EOL;
     if(file_exists($filename)){
         return true;
     }else{
