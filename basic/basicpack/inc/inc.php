@@ -14,7 +14,7 @@ function inc($includes){
         if(file_exists($filename)){
             require_once($filename);
         }else{
-            die('<b>Errorx: </b><br>inc <b>'.$include.'</b> not found');
+            die('<b>Error: </b><br>inc <b>'.$include.'</b> not found');
         }
     }
 }
