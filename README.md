@@ -15,7 +15,7 @@ git clone https://github.com/basicpack/basic.git &&
 cd ~/.config/basic &&
 sudo rm -rf /usr/bin/basic &&
 mkdir ~/.config/basic/cache &&
-sudo chmod 755 -R ~/.config/basic/cache &&
+sudo chmod 777 -R ~/.config/basic/cache &&
 sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
 chmod +x /usr/bin/basic
 ```
