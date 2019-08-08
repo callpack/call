@@ -115,10 +115,6 @@ function instalar(){
     instalarDependenciasNoPWD();
     //extrair o nome dos pacotes criando o array $pacotesArr
     $pacotesArr=criarOPacotesArr($_SERVER['argv']);
-    //verifica se o inc está instalado, se não tiver adiciona ao $pacotesArr
-    if(!oPacoteEstáInstaladoNoPWD('inc')){
-        $pacotesArr[]='inc';
-    }
     //instala cada pacote do $pacotesArr
     foreach ($pacotesArr as $pacoteStr) {
         instalarOPacote($pacoteStr);
@@ -135,7 +131,9 @@ function instalarDependenciasNoPWD(){
     ];
     $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
-        instalarOPacote($pacoteStr);
+        if(!oPacoteEstáInstaladoNoPWD($pacoteStr)){
+            instalarOPacote($pacoteStr);
+        }
     }
 }
 function instalarOPacote($pacoteStr,$pularCache=false){
