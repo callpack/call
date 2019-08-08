@@ -149,7 +149,7 @@ function instalarDependenciasNoPWD(){
     ];
     $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
-        instalarOPacote($pacotesStr,$pularDependencias);
+        instalarOPacote($pacoteStr,$pularDependencias);
     }
 }
 function instalarOPacote($pacotesStr,$pularDependencias=false,$pularCache=false){
