@@ -16,9 +16,7 @@ if(!iscli()){
     mensagemDeErro('O '.$_ENV['NOME_DO_GERENCIADOR'].' só funciona no modo CLI');
 }
 error(1);
-$PWD=getcwd().'/';//get current working director
 $fn=@$_SERVER['argv'][1];
-$update=false;
 $pacotesArr=criarOPacotesArr($_SERVER['argv']);
 //NOTE switch
 switch($fn){
