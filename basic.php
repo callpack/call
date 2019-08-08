@@ -42,6 +42,19 @@ switch($fn){
     break;
 }
 //FUNÇÕES
+function adicionarOPacoteAoJson($pacoteStr){
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGerenciador.'.json';
+    if(file_exists($filename)){
+        $str=file_get_contents($filename);
+        $arr=json_decode($str,true);
+    }
+    $arr[]=$pacoteStr;
+    $arr=array_filter($arr);
+    $str=json_encode($arr,JSON_PRETTY_PRINT);
+    file_put_contents($filename,$str);
+}
 function atualizar($pacotesArr){
     $pularCache=true;
     instalarOPacote($pacoteStr,$pularCache);
@@ -103,11 +116,12 @@ function extrairOPacoteDoCacheParaOPWD($pacoteStr){
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
     $destination=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub;
     if(unzip($filename,$destination)){
-        $oldName=$destination.'/'.$pacoteStr.'/'.$pacoteStr.'-master';
-        $newName=$destination.'/'.$pacoteStr.'-master';
-        system("mv $oldName $newName");
         $oldName=$destination.'/'.$pacoteStr.'-master';
         $newName=$destination.'/'.$pacoteStr;
+        //TODO move fatal
+        if(file_exists($newName)){
+            system("rm -rf $newName");
+        }
         system("mv $oldName $newName");
         return true;
     }else{
@@ -137,60 +151,64 @@ function instalarDependenciasNoPWD(){
     ];
     $pularDependencias=true;
     foreach ($pacotesArr as $pacoteStr) {
-        if(!oPacoteEstáInstaladoNoPWD($pacoteStr)){
+        if(!oPacoteEstaNoPWD($pacoteStr)){
             instalarOPacote($pacoteStr);
         }
     }
 }
 function instalarOPacote($pacoteStr,$pularCache=false){
-    // possíveis retornos do install
-    // //instalação
-    // if o pacote existe no PWD
-    if(oPacoteEstáInstaladoNoPWD($pacoteStr) && $pularCache==false){
-        //     diz que o pacote já está instalado
-        oPacoteFoiInstaladoComSucesso($pacoteStr);
-    }elseif(oPacoteExisteNoCache($pacoteStr) && $pularCache==false){
-        // elseif o pacote existe no cache
-        //     instala ele no PWD
-        instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
-    }elseif(oPacoteExisteNoGithub($pacoteStr)){
-        // elseif o pacote existe no Github
-        instalarOPacoteAPartirDoGithub($pacoteStr);
+    //verifica se já tá instalado
+    $oPacoteEstaNoPWD=oPacoteEstaNoPWD($pacoteStr);
+    if($oPacoteEstaNoPWD){
+        return oPacoteJaEstavaInstalado($pacoteStr);
     }else{
-        // else (se o pacote não existe no pwd, no cache ou no github)
-        //     diz que o pacote não existe no github
-        mensagemDeErro('O pacote não existe no Github');
+        if($pularCache){
+            $via='github';
+            $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
+        }else{
+            //verifica se existe no cache
+            $oPacoteEstaNoCache=oPacoteEstaNoCache($pacoteStr);
+            if($oPacoteEstaNoCache){
+                $via='cache';
+                $foiInstalado=instalarOPacoteAPartirDoCache($pacoteStr);
+            }else{
+                $via='github2';
+                $foiInstalado=instalarOPacoteAPartirDoGithub($pacoteStr);
+            }
+        }
+        print $via.PHP_EOL;
+        //verifica se foi instalado
+        if($foiInstalado){
+            return oPacoteFoiInstaladoComSucesso($pacoteStr);
+        }else{
+            return ocorreuUmErroAoInstalarOPacote($pacoteStr);
+        }
     }
 }
 function instalarOPacoteAPartirDoGithub($pacoteStr){
-    //baixar o pacote do github
-    $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
-    //salvar o pacote no cache
-    criarAPastaCache();
-    $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
-    if(file_exists($filename)){
-        removerPacoteDoCache($pacoteStr);
+    if(oPacoteEstaNoGithub($pacoteStr)){
+        //baixar o pacote do github
+        $conteudoDoPacoteStr=baixarOPacoteDoGithub($pacoteStr);
+        //salvar o pacote no cache
+        criarAPastaCache();
+        $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
+        if(file_exists($filename)){
+            removerOPacoteDoCache($pacoteStr);
+        }
+        file_put_contents($filename,$conteudoDoPacoteStr);
+        //instalar o pacote no pwd a partir do cache
+        return instalarOPacoteAPartirDoCache($pacoteStr);
+    }else{
+        return false;
     }
-    file_put_contents($filename,$conteudoDoPacoteStr);
-    //instalar o pacote no pwd a partir do cache
-    instalarOPacoteNoPWDAPartirDoCache($pacoteStr);
 }
-function instalarOPacoteNoPWDAPartirDoCache($pacoteStr){
-    //instala o pacote no pwd
-    extrairOPacoteDoCacheParaOPWD($pacoteStr);
-    $PWD=getPWD();
-    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
-    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGerenciador.'.json';
-    if(file_exists($filename)){
-        $str=file_get_contents($filename);
-        $arr=json_decode($str);
+function instalarOPacoteAPartirDoCache($pacoteStr){
+    if(extrairOPacoteDoCacheParaOPWD($pacoteStr)){
+        adicionarOPacoteAoJson($pacoteStr);
+        return true;
+    }else{
+        return false;
     }
-    $arr[]=$pacoteStr;
-    $arr=array_filter($arr);
-    $str=json_encode($arr,JSON_PRETTY_PRINT);
-    file_put_contents($filename,$str);
-    //     diz que o pacote foi instalado com sucesso
-    oPacoteFoiInstaladoComSucesso($pacoteStr);
 }
 function mensagemDeErro($msg){
     //imprime uma mensagem de erro colorida
@@ -200,9 +218,13 @@ function mensagemDeErro($msg){
 function mensagemDeSucesso($msg){
     //imprime uma mensagem de sucesso colorida
     $title=colortext('✔️','green',true);
-    print $title.' '.$msg.PHP_EOL;
+    return print $title.' '.$msg.PHP_EOL;
 }
-function oPacoteExisteNoCache($pacoteStr){
+function ocorreuUmErroAoInstalarOPacote($pacoteStr){
+    $pacoteStr=colortext($pacoteStr,'white',true);
+    return mensagemDeErro('Ocorreu um erro ao tentar instalar o pacote '.$pacoteStr);
+}
+function oPacoteEstaNoCache($pacoteStr){
     //verifica se o pacote existe no cache
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $filename=__DIR__.$nomeDoGerenciador.'/cache/'.$pacoteStr.'.zip';
@@ -212,19 +234,20 @@ function oPacoteExisteNoCache($pacoteStr){
         return false;
     }
 }
-function oPacoteExisteNoGithub($pacoteStr){
+function oPacoteEstaNoGithub($pacoteStr){
     //verifica se o pacote existe no Github
     $nomeDoGithub=$_ENV['NOME_DO_GITHUB'];
     $urlStr='https://github.com/'.$nomeDoGithub.'/'.$pacoteStr.'/archive/master.zip';
     return isdownloadable($urlStr);
 }
-function oPacoteEstáInstaladoNoPWD($pacoteStr){
+function oPacoteEstaNoPWD($pacoteStr){
+    //TODO bug no bool
     //verifica se o pacote está instalado no pwd
     $PWD=getPWD();
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
     $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr.'/';
-    $filename.=$pacoteStr.'.php';
+    $filename=$filename.$pacoteStr.'.php';
     if(file_exists($filename)){
         return true;
     }else {
@@ -233,14 +256,46 @@ function oPacoteEstáInstaladoNoPWD($pacoteStr){
 }
 function oPacoteFoiInstaladoComSucesso($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
-    mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
+    return mensagemDeSucesso('O pacote '.$pacoteStr.' foi instalado');
 }
-function removerPacoteDoCache($pacoteStr){
+function oPacoteJaEstavaInstalado($pacoteStr){
+    $pacoteStr=colortext($pacoteStr,'white',true);
+    return mensagemDeSucesso('O pacote '.$pacoteStr.' já estava instalado');
+}
+function removerOPacoteDoCache($pacoteStr){
     //removerPacoteDoCache
     $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
     $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
     if(file_exists($filename)){
         unlink($filename);
+    }
+}
+function removerOPacoteDoJson($pacoteStr){
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGerenciador.'.json';
+    if(file_exists($filename)){
+        $str=file_get_contents($filename);
+        $arr=json_decode($str,true);
+    }
+    $arr[]=$pacoteStr;
+    $arr=array_filter($arr);
+    foreach ($arr as $key => $value) {
+        if($value==$pacoteStr){
+            unset($arr[$key]);
+        }
+    }
+    $str=json_encode($arr,JSON_PRETTY_PRINT);
+    file_put_contents($filename,$str);
+}
+function removerOPacoteDoPWD($pacoteStr){
+    removerOPacoteDoJson($pacoteStr);
+    $PWD=getPWD();
+    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    $nomeDoGithub=$_ENV['NOME_DO_GERENCIADOR'];
+    $filename=$PWD.$nomeDoGerenciador.'/'.$nomeDoGithub.'/'.$pacoteStr.'/';
+    if(file_exists($filename)){
+        system("rm -rf $filename");
     }
 }
 function telaDeAjuda(){
