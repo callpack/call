@@ -331,7 +331,7 @@ function removerOPacoteDoPWD($pacoteStr){
 function telaDeAjuda(){
     print "Modo de usar:".PHP_EOL;
     print chr(9).$_ENV['NOME_DO_GERENCIADOR']." [comando] ";
-    print "[nome do pacote opcional]".PHP_EOL;
+    print "[nome do(s) pacote(s)]".PHP_EOL;
     echo "Comandos:".PHP_EOL;
     echo chr(9).'help- Mostra essa tela de ajuda'.PHP_EOL;
     echo chr(9).'install - Instala o(s) pacote(s)'.PHP_EOL;
