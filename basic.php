@@ -235,6 +235,7 @@ function ocorreuUmErroAoRemoverOPacote($pacoteStr){
 }
 function oPacoteEstaNoCache($pacoteStr){
     $filename=__DIR__.'/cache/'.$pacoteStr.'.zip';
+    print $filename.PHP_EOL;
     if(file_exists($filename)){
         return true;
     }else{
