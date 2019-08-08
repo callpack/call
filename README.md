@@ -22,10 +22,11 @@ chmod +x /usr/bin/basic
 basic [comando] [nome do pacote]
 ```
 ## Comandos
-- install - Instala um pacote
-- remove - Remove um pacote
-- uninstall - Remove um pacote
-- update - Atualiza um pacote
+- help- Mostra a tela de ajuda
+- install - Instala o(s) pacote(s)
+- remove - Remove o(s) pacote(s)
+- uninstall - Remove o(s) pacote(s)
+- update - Atualiza o(s) pacote(s)
 
 ## Idéias em aberto
 - Instalar pacotes públicos de terceiros
