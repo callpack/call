@@ -1,6 +1,6 @@
 # Gerenciador de pacotes procedurais PHP
 ## Funcionalidades (features)
-1. Baixar pacotes da organização [Basic](https://github.com/basicpack)
+1. Baixar pacotes da organização [Basic](https://github.com/basicgnomo)
 2. Fazer o cache local dos pacotes
 3. Instalar os pacotes
 4. Atualizar os pacotes
@@ -11,7 +11,7 @@
 ```bash
 rm -rf ~/.config/basic &&
 cd ~/.config &&
-git clone https://github.com/basicpack/basic.git &&
+git clone https://github.com/ognomodavi/basic.git &&
 cd ~/.config/basic &&
 sudo rm -rf /usr/bin/basic &&
 mkdir ~/.config/basic/cache &&
