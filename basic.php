@@ -157,7 +157,7 @@ function instalarDependenciasNoPWD(){
         copy($basicDoCache,$filename);
     }
     $dependênciasArr=[
-        'call',
+        'controller',
         'inc'
     ];
     foreach ($dependênciasArr as $pacoteStr) {
