@@ -215,7 +215,7 @@ function instalarOPacoteAPartirDoCache($pacoteStr){
 function mensagemDeErro($msg){
     //imprime uma mensagem de erro colorida
     $title=colortext('❌ ','red',true);
-    die($title.$msg.PHP_EOL);
+    die($title.' '.$msg.PHP_EOL);
 }
 function mensagemDeSucesso($msg){
     //imprime uma mensagem de sucesso colorida
