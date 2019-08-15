@@ -1,6 +1,7 @@
 [
     "call",
     "colortext",
+    "controller",
     "download",
     "env",
     "error",

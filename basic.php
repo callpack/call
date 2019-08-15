@@ -215,12 +215,12 @@ function instalarOPacoteAPartirDoCache($pacoteStr){
 function mensagemDeErro($msg){
     //imprime uma mensagem de erro colorida
     $title=colortext('❌','red',true);
-    die($title.$msg.PHP_EOL);
+    die($msg.$title.PHP_EOL);
 }
 function mensagemDeSucesso($msg){
     //imprime uma mensagem de sucesso colorida
     $title=colortext('✔️','green',true);
-    return print $title.$msg.PHP_EOL;
+    return print $msg.$title.PHP_EOL;
 }
 function ocorreuUmErroAoAtualizadOPacote($pacoteStr){
     $pacoteStr=colortext($pacoteStr,'white',true);
