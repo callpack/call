@@ -11,7 +11,7 @@
 ```bash
 rm -rf ~/.config/basic &&
 cd ~/.config &&
-git clone https://github.com/ognomodavi/basic.git &&
+git clone https://github.com/basicpack/basic.git &&
 cd ~/.config/basic &&
 sudo rm -rf /usr/bin/basic &&
 mkdir ~/.config/basic/cache &&
