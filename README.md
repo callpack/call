@@ -51,3 +51,4 @@ controller('teste/home');
 ### Idéias em aberto
 - Instalar pacotes públicos de terceiros
 - Instalar pacotes privados
+- Migração de tabelas
