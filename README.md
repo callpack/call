@@ -52,3 +52,4 @@ controller('teste/home');
 - Instalar pacotes públicos de terceiros
 - Instalar pacotes privados
 - Migração de tabelas
+- Instalação automática dos pacotes Basic
