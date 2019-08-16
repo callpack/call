@@ -149,22 +149,22 @@ function instalar($pacotesArr){
 function instalarDependenciasNoPWD(){
     criarAPastaCache();
     criarAPastaDeDestinoNoPWD();
-    $PWD=getPWD();
-    $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
-    $filename=$PWD.$nomeDoGerenciador.'/basic.php';
-    if(!file_exists($filename)){
-        $basicDoCache=__DIR__.'/'.$nomeDoGerenciador.'/basic.php';
-        copy($basicDoCache,$filename);
-    }
-    $dependênciasArr=[
-        'controller',
-        'inc'
-    ];
-    foreach ($dependênciasArr as $pacoteStr) {
-        if(!oPacoteEstaNoPWD($pacoteStr)){
-            instalarOPacote($pacoteStr);
-        }
-    }
+    // $PWD=getPWD();
+    // $nomeDoGerenciador=$_ENV['NOME_DO_GERENCIADOR'];
+    // $filename=$PWD.$nomeDoGerenciador.'/basic.php';
+    // if(!file_exists($filename)){
+    //     $basicDoCache=__DIR__.'/'.$nomeDoGerenciador.'/basic.php';
+    //     copy($basicDoCache,$filename);
+    // }
+    // $dependênciasArr=[
+    //     'controller',
+    //     'inc'
+    // ];
+    // foreach ($dependênciasArr as $pacoteStr) {
+    //     if(!oPacoteEstaNoPWD($pacoteStr)){
+    //         instalarOPacote($pacoteStr);
+    //     }
+    // }
 }
 function instalarOPacote($pacoteStr,$pularCache=false){
     //verifica se já tá instalado
