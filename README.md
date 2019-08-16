@@ -1,4 +1,6 @@
 # Gerenciador de pacotes HMVC em PHP
+Baseado no código fonte do [Basic v0.1.0](https://github.com/basicpack/basic/releases/tag/0.1.0).
+
 ## Funcionalidades (features)
 1. Baixar pacotes da organização [Call](https://github.com/callgnomo)
 2. Fazer o cache local dos pacotes
