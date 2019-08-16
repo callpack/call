@@ -1,42 +1,42 @@
-# Gerenciador de pacotes procedurais PHP
+# Gerenciador de pacotes HMVC em PHP
 ## Funcionalidades (features)
-1. Baixar pacotes da organização [Basic](https://github.com/basicgnomo)
+1. Baixar pacotes da organização [Call](https://github.com/callgnomo)
 2. Fazer o cache local dos pacotes
 3. Instalar os pacotes
 4. Atualizar os pacotes
 5. Remover os pacotes
-6. Incorporar os pacotes facilmente através da função inc()
+6. Incorporar os pacotes facilmente através da função controller()
 
 ## Instalação
 ```bash
 rm -rf ~/.config/basic &&
 cd ~/.config &&
-git clone https://github.com/basicpack/basic.git &&
-cd ~/.config/basic &&
-sudo rm -rf /usr/bin/basic &&
-mkdir ~/.config/basic/cache &&
-sudo chmod 777 -R ~/.config/basic/cache &&
-sudo ln -s ~/.config/basic/basic.php /usr/bin/basic &&
-chmod +x /usr/bin/basic
+git clone https://github.com/callpack/call.git &&
+cd ~/.config/call &&
+sudo rm -rf /usr/bin/call &&
+mkdir ~/.config/call/cache &&
+sudo chmod 777 -R ~/.config/call/cache &&
+sudo ln -s ~/.config/call/call.php /usr/bin/call &&
+chmod +x /usr/bin/call
 ```
 
 ## Como usar
 Execute o comando no terminal:
 ```bash
-basic [comando] [nome do(s) pacote(s)]
+call [comando] [nome do(s) pacote(s)]
 ```
 Por exemplo, para instalar o pacote de exemplo:
 ```bash
-basic install test
+call install teste
 ```
 Então adicione o código de incorporação ao PHP:
 ```php
 <?php
 require 'basic/basic.php';
 inc([
-    'test'    
+    'controller'    
 ]);
-test();//função pronta para ser usada
+controller('teste/home');
 ```
 
 ### Comandos
