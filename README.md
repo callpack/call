@@ -11,7 +11,7 @@ Baseado no código fonte do [Basic v0.1.0](https://github.com/basicpack/basic/re
 
 ## Instalação
 ```bash
-rm -rf ~/.config/basic &&
+rm -rf ~/.config/call &&
 cd ~/.config &&
 git clone https://github.com/callpack/call.git &&
 cd ~/.config/call &&
